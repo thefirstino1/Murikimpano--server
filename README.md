@@ -20,5 +20,6 @@ Murikimpano server by DJ GNB
   <footer style="margin-top: 50px;">
     <p>&copy; 2025 Murikimpano Server - By GNB Boss</p>
   </footer>
+  https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd
 </body>
 </html>
