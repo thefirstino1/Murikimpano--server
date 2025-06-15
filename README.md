@@ -16,35 +16,7 @@ Murikimpano server by DJ GNB
   <hr>
 <h2>💳 Kwishura ukoresheje Cryptocurrency</h2>
 
-<div>
-  <h3>💰 USDT (TRC20 - Tron)</h3>
-  <p><code id="trc20">TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd</code> 
-  <button onclick="copyToClipboard('trc20')">Copy</button></p>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd" width="200" alt="USDT QR">
-
-<div>
-  <h3>🟡 USDT (BEP20)</h3>
-  <p><code id="bep20">0x61918De1e959F433AcF281810b8A12Ce8beA650c</code> 
-  <button onclick="copyToClipboard('bep20')">Copy</button></p>
-  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=0x61918De1e959F433AcF281810b8A12Ce8beA650c" width="150" alt="BEP20 QR">
-</div>
-
-<div>
-  <h3>₿ Bitcoin</h3>
-  <p><code id="btc">bc1qc9z6ltzqu3h73ryu9n0uv3v4rqj35e8r3jfnhs</code> 
-  <button onclick="copyToClipboard('btc')">Copy</button></p>
-  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=bc1qc9z6ltzqu3h73ryu9n0uv3v4rqj35e8r3jfnhs" width="150" alt="BTC QR">
-</div>
-
-<!-- Add more like this for Toncoin, Solana, Litecoin, XRP, etc -->
-
-<script>
-  function copyToClipboard(id) {
-    const text = document.getElementById(id).innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      alert("Wallet address copied!");
-    });
-  }
+}
 </script>
 <body style="font-family: Arial; background-color: #f2f2f2; text-align: center; padding: 50px;">
   <h1>MURAKAZA NEZA KURI MURIKIMPANO SERVER!</h1>
