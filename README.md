@@ -1,4 +1,5 @@
 # Murikimpano--server
+<img src="logomu.jpg" alt="Murikimpano Logo" width="200">
 Murikimpano server by DJ GNB
 <!DOCTYPE html>
 <html lang="rw">
