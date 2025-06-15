@@ -20,8 +20,7 @@ Murikimpano server by DJ GNB
   <h3>💰 USDT (TRC20 - Tron)</h3>
   <p><code id="trc20">TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd</code> 
   <button onclick="copyToClipboard('trc20')">Copy</button></p>
-  <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd" width="150" alt="TRC20 QR">
-</div>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd" width="200" alt="USDT QR">
 
 <div>
   <h3>🟡 USDT (BEP20)</h3>
