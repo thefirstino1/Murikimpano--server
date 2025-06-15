@@ -14,10 +14,50 @@ Murikimpano server by DJ GNB
 <p><strong>Email:</strong> <a href="mailto:gilbertgnbndayi@gmail.com">gilbertgnbndayi@gmail.com</a></p>
 <p><strong>YouTube:</strong> <a href="https://youtube.com/@murikimpano" target="_blank">MurikiMpano TV</a></p>
   <hr>
-<h2>💳 Kwishura ukoresheje Cryptocurrency</h2>
+<!-- USDT (TRC20) -->
+<h3>USDT (TRC20)</h3>
+<img src="qr/USDT_TRC20.png" width="200" alt="USDT TRC20 QR">
+<p><strong>Address:</strong> TVDjoNHhqjcfAEWwChuJzx2LwWVimWA4vd</p>
 
-}
-</script>
+<!-- USDT (BEP20) -->
+<h3>USDT (BEP20)</h3>
+<img src="qr/USDT_BEP20.png" width="200" alt="USDT BEP20 QR">
+<p><strong>Address:</strong> 0x61918De1e959F433AcF281810b8A12Ce8beA650c</p>
+
+<!-- Bitcoin (BTC) -->
+<h3>Bitcoin (BTC)</h3>
+<img src="qr/BTC.png" width="200" alt="Bitcoin QR">
+<p><strong>Address:</strong> bc1qc9z6ltzqu3h73ryu9n0uv3v4rqj35e8r3jfnhs</p>
+
+<!-- Litecoin (LTC) -->
+<h3>Litecoin (LTC)</h3>
+<img src="qr/LTC.png" width="200" alt="Litecoin QR">
+<p><strong>Address:</strong> ltc1qavyu4r0xe579v8jsdux2pu393knpzhkjje4jxv</p>
+
+<!-- Ethereum (ETH) -->
+<h3>Ethereum (ETH)</h3>
+<img src="qr/ETH.png" width="200" alt="Ethereum QR">
+<p><strong>Address:</strong> 0x61918De1e959F433AcF281810b8A12Ce8beA650c</p>
+
+<!-- XRP -->
+<h3>XRP</h3>
+<img src="qr/XRP.png" width="200" alt="XRP QR">
+<p><strong>Address:</strong> rBmJ1Hvs7RZzLW6Zgyhyc18123uN7RHq4L</p>
+
+<!-- BNB -->
+<h3>BNB</h3>
+<img src="qr/BNB.png" width="200" alt="BNB QR">
+<p><strong>Address:</strong> 0x61918De1e959F433AcF281810b8A12Ce8beA650c</p>
+
+<!-- Solana -->
+<h3>Solana</h3>
+<img src="qr/SOL.png" width="200" alt="Solana QR">
+<p><strong>Address:</strong> 3UkRYvk3uMfb8V68JYkQ8yNFFX8xUUeBMgdZzDN7d9J4</p>
+
+<!-- Toncoin -->
+<h3>Toncoin</h3>
+<img src="qr/TON.png" width="200" alt="Toncoin QR">
+<p><strong>Address:</strong> UQAHkHOq_ZCDrxubfdYrrE-cvbGI_59fth_pRWQwZLpWHxw3</p>
 <body style="font-family: Arial; background-color: #f2f2f2; text-align: center; padding: 50px;">
   <h1>MURAKAZA NEZA KURI MURIKIMPANO SERVER!</h1>
   <p>GNB Boss - Ubutunzi, AI, Ikoranabuhanga, Ibitangaza</p>
