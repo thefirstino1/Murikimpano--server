@@ -65,5 +65,43 @@ Murikimpano server by DJ GNB
   <footer style="margin-top: 50px;">
     <p>&copy; 2025 Murikimpano Server - By GNB Boss</p>
   </footer>
+<!-- LANGUAGE SWITCHER -->
+<div style="text-align: center; margin-top: 40px;">
+  <label for="languageSwitcher"><strong>Select Language:</strong></label>
+  <select id="languageSwitcher" onchange="switchLanguage()" style="padding: 5px; font-size: 16px;">
+    <option value="kinyarwanda">Ikinyarwanda</option>
+    <option value="english">English</option>
+    <option value="french">Français</option>
+    <option value="swahili">Kiswahili</option>
+  </select>
+</div>
+
+<!-- TEXT SECTION -->
+<div id="homeText" style="text-align: center; margin-top: 20px; font-size: 20px;">
+  Murakaza neza kuri Murikimpano!
+</div>
+
+<!-- LANGUAGE SCRIPT -->
+<script>
+  const translations = {
+    kinyarwanda: {
+      homeText: "Murakaza neza kuri Murikimpano!"
+    },
+    english: {
+      homeText: "Welcome to Murikimpano!"
+    },
+    french: {
+      homeText: "Bienvenue sur Murikimpano !"
+    },
+    swahili: {
+      homeText: "Karibu kwenye Murikimpano!"
+    }
+  };
+
+  function switchLanguage() {
+    const lang = document.getElementById("languageSwitcher").value;
+    document.getElementById("homeText").innerText = translations[lang].homeText;
+  }
+</script>
 </body>
 </html>
