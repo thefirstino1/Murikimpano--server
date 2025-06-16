@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crypto Payment | Murikimpano</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
 
+    h1 {
+      color: #222;
+    }
+
+    .wallet-box {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+
+    .wallet-box img {
+      width: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    .wallet-address {
+      font-weight: bold;
+      font-size: 16px;
+      word-wrap: break-word;
+      margin: 10px 0;
+    }
+
+    button.copy-btn {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button.copy-btn:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Crypto Payment System – Murikimpano</h1>
+  <p>Hitamo uburyo wifuza kwishuraho hifashishijwe cryptocurrency. Kanda kuri buto yo <strong>Copy</strong> kugirango wifashishe address.</p>
+
+  <!-- TRX -->
+  <div class="wallet-box">
+    <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRX">
+    <span><strong>TRX Wallet</strong></span>
+    <div class="wallet-address" id="trx-address">TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z</div>
+    <button class="copy-btn" onclick="copyToClipboard('trx-address')">Copy TRX Address</button>
+  </div>
+
+  <!-- BTC -->
+  <div class="wallet-box">
+    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">
+    <span><strong>Bitcoin Wallet</strong></span>
+    <div class="wallet-address" id="btc-address">bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf</div>
+    <button class="copy-btn" onclick="copyToClipboard('btc-address')">Copy BTC Address</button>
+  </div>
+
+  <!-- USDT - TRC20 -->
+  <div class="wallet-box">
+    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
+    <span><strong>USDT (TRC20)</strong></span>
+    <div class="wallet-address" id="usdt-trc20-address">TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL</div>
+    <button class="copy-btn" onclick="copyToClipboard('usdt-trc20-address')">Copy USDT TRC20</button>
+  </div>
+
+  <!-- USDT - BEP20 -->
+  <div class="wallet-box">
+    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
+    <span><strong>USDT (BEP20)</strong></span>
+    <div class="wallet-address" id="usdt-bep20-address">0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4</div>
+    <button class="copy-btn" onclick="copyToClipboard('usdt-bep20-address')">Copy USDT BEP20</button>
+  </div>
+
+  <!-- Toncoin -->
+  <div class="wallet-box">
+    <img src="https://cryptologos.cc/logos/ton-crystal-ton-logo.png" alt="Toncoin">
+    <span><strong>Toncoin Wallet</strong></span>
+    <div class="wallet-address" id="ton-address">UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ</div>
+    <button class="copy-btn" onclick="copyToClipboard('ton-address')">Copy TON Address</button>
+  </div>
+
+  <script>
+    function copyToClipboard(id) {
+      var text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        alert("Address copied: " + text);
+      }, function(err) {
+        alert("Failed to copy address: ", err);
+      });
+    }
+  </script>
+
+</body>
+</html>
