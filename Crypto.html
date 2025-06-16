@@ -7,7 +7,7 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      background-color: #f0f0f0;
+      background-color: #f5f5f5;
     }
 
     h1 {
@@ -16,17 +16,23 @@
 
     .wallet-box {
       background-color: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-      max-width: 600px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .wallet-box img {
-      width: 40px;
-      vertical-align: middle;
-      margin-right: 10px;
+    .qr {
+      width: 120px;
+    }
+
+    .wallet-details {
+      flex: 1;
+      min-width: 200px;
     }
 
     .wallet-address {
@@ -52,56 +58,66 @@
 </head>
 <body>
 
-  <h1>Crypto Payment System – Murikimpano</h1>
-  <p>Hitamo uburyo wifuza kwishuraho hifashishijwe cryptocurrency. Kanda kuri buto yo <strong>Copy</strong> kugirango wifashishe address.</p>
+  <h1>Crypto Payment – Murikimpano</h1>
+  <p>Hitamo coin, scan QR code cyangwa ukande kuri "Copy Address".</p>
 
   <!-- TRX -->
   <div class="wallet-box">
-    <img src="https://cryptologos.cc/logos/tron-trx-logo.png" alt="TRX">
-    <span><strong>TRX Wallet</strong></span>
-    <div class="wallet-address" id="trx-address">TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z</div>
-    <button class="copy-btn" onclick="copyToClipboard('trx-address')">Copy TRX Address</button>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z&size=150x150" alt="TRX QR">
+    <div class="wallet-details">
+      <h3>TRX Wallet</h3>
+      <div class="wallet-address" id="trx">TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z</div>
+      <button class="copy-btn" onclick="copyToClipboard('trx')">Copy TRX Address</button>
+    </div>
   </div>
 
   <!-- BTC -->
   <div class="wallet-box">
-    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC">
-    <span><strong>Bitcoin Wallet</strong></span>
-    <div class="wallet-address" id="btc-address">bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf</div>
-    <button class="copy-btn" onclick="copyToClipboard('btc-address')">Copy BTC Address</button>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf&size=150x150" alt="BTC QR">
+    <div class="wallet-details">
+      <h3>Bitcoin Wallet</h3>
+      <div class="wallet-address" id="btc">bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf</div>
+      <button class="copy-btn" onclick="copyToClipboard('btc')">Copy BTC Address</button>
+    </div>
   </div>
 
-  <!-- USDT - TRC20 -->
+  <!-- USDT TRC20 -->
   <div class="wallet-box">
-    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
-    <span><strong>USDT (TRC20)</strong></span>
-    <div class="wallet-address" id="usdt-trc20-address">TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL</div>
-    <button class="copy-btn" onclick="copyToClipboard('usdt-trc20-address')">Copy USDT TRC20</button>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL&size=150x150" alt="USDT TRC20 QR">
+    <div class="wallet-details">
+      <h3>USDT (TRC20)</h3>
+      <div class="wallet-address" id="usdt-trc20">TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL</div>
+      <button class="copy-btn" onclick="copyToClipboard('usdt-trc20')">Copy USDT TRC20</button>
+    </div>
   </div>
 
-  <!-- USDT - BEP20 -->
+  <!-- USDT BEP20 -->
   <div class="wallet-box">
-    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT">
-    <span><strong>USDT (BEP20)</strong></span>
-    <div class="wallet-address" id="usdt-bep20-address">0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4</div>
-    <button class="copy-btn" onclick="copyToClipboard('usdt-bep20-address')">Copy USDT BEP20</button>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4&size=150x150" alt="USDT BEP20 QR">
+    <div class="wallet-details">
+      <h3>USDT (BEP20)</h3>
+      <div class="wallet-address" id="usdt-bep20">0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4</div>
+      <button class="copy-btn" onclick="copyToClipboard('usdt-bep20')">Copy USDT BEP20</button>
+    </div>
   </div>
 
-  <!-- Toncoin -->
+  <!-- TON -->
   <div class="wallet-box">
-    <img src="https://cryptologos.cc/logos/ton-crystal-ton-logo.png" alt="Toncoin">
-    <span><strong>Toncoin Wallet</strong></span>
-    <div class="wallet-address" id="ton-address">UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ</div>
-    <button class="copy-btn" onclick="copyToClipboard('ton-address')">Copy TON Address</button>
+    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ&size=150x150" alt="TON QR">
+    <div class="wallet-details">
+      <h3>Toncoin Wallet</h3>
+      <div class="wallet-address" id="ton">UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ</div>
+      <button class="copy-btn" onclick="copyToClipboard('ton')">Copy TON Address</button>
+    </div>
   </div>
 
   <script>
     function copyToClipboard(id) {
-      var text = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(text).then(function() {
-        alert("Address copied: " + text);
-      }, function(err) {
-        alert("Failed to copy address: ", err);
+      const address = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(address).then(() => {
+        alert("Address copied: " + address);
+      }).catch(err => {
+        alert("Failed to copy: " + err);
       });
     }
   </script>
