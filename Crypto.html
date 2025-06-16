@@ -3,6 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Crypto Payment | Murikimpano</title>
+  <!-- Hasi ya style, hejuru ya <script> ya copy -->
+<div id="rates" style="max-width:600px; margin-bottom:20px;">
+  <h2>💱 Live Exchange Rates (USD)</h2>
+  <ul>
+    <li>TRX: <span id="rate-tron">--</span> USD</li>
+    <li>BTC: <span id="rate-bitcoin">--</span> USD</li>
+    <li>USDT: <span id="rate-tether">--</span> USD</li>
+    <li>TON: <span id="rate-toncoin">--</span> USD</li>
+  </ul>
+</div>
+
+<script>
+  async function loadRates() {
+    try {
+      const ids = ['tron','bitcoin','tether','toncoin'];
+      const resp = await fetch(
+        'https://api.coingecko.com/api/v3/simple/price?ids=' + ids.join(',') + '&vs_currencies=usd'
+      );
+      const data = await resp.json();
+      document.getElementById('rate-tron').innerText = data.tron.usd;
+      document.getElementById('rate-bitcoin').innerText = data.bitcoin.usd;
+      document.getElementById('rate-tether').innerText = data.tether.usd;
+      document.getElementById('rate-toncoin').innerText = data.toncoin.usd;
+    } catch (e) {
+      console.error('Error loading rates:', e);
+    }
+  }
+
+  loadRates();
+  setInterval(loadRates, 60 * 1000); // Bivugururwa buri munota
+</script>
+  
   <style>
     body {
       font-family: Arial, sans-serif;
