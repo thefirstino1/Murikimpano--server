@@ -1,1 +1,59 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Murikimpano Payment Confirmation</title>
+</head>
+<body>
+  <h2>Payment Confirmation Form</h2>
+  <form action="process-payment.php" method="POST">
+    <label>Izina ryawe:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email cyangwa Phone:</label><br>
+    <input type="text" name="contact" required><br><br>
+
+    <label>Crypto wakoresheje:</label><br>
+    <select name="crypto" required>
+      <option>USDT (TRC20)</option>
+      <option>USDT (BEP20)</option>
+      <option>Bitcoin (BTC)</option>
+      <option>Litecoin (LTC)</option>
+      <option>Ethereum (ETH)</option>
+      <option>XRP</option>
+      <option>BNB</option>
+      <option>Solana</option>
+      <option>Toncoin</option>
+    </select><br><br>
+
+    <label>Transaction ID (TxID):</label><br>
+    <input type="text" name="txid" required><br><br>
+
+    <label>Ibyo wishyuye (service / product):</label><br>
+    <input type="text" name="details" required><br><br>
+
+    <input type="submit" value="Ohereza Kwemeza Uwishyuye">
+  </form>
+</body>
+</html>
+
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST['name'];
+  $contact = $_POST['contact'];
+  $crypto = $_POST['crypto'];
+  $txid = $_POST['txid'];
+  $details = $_POST['details'];
+
+  $to = "gilbertgnbndayi@gmail.com"; // Aha niho bizajya bijya
+  $subject = "Payment Confirmation from $name";
+  $message = "Name: $name\nContact: $contact\nCrypto: $crypto\nTxID: $txid\nDetails: $details";
+  $headers = "From: confirmation@murikimpano.com";
+
+  if (mail($to, $subject, $message, $headers)) {
+    echo "Ubutumwa bwo kwemeza bwatanzwe neza!";
+  } else {
+    echo "Byanze kohereza email. Gerageza kandi.";
+  }
+}
+?>
