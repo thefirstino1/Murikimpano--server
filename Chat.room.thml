@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Murikimpano Chat Room</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f1f1f1;
+      padding: 20px;
+    }
+
+    #chat-box {
+      width: 100%;
+      max-width: 600px;
+      height: 400px;
+      overflow-y: scroll;
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Murakaza neza kuri <strong>Murikimpano Chat Room</strong> 🗨️</h2>
+
+  <div id="chat-box"></div>
+
+  <input type="text" id="name" placeholder="Izina ryawe">
+  <br>
+  <input type="text" id="message" placeholder="Andika ubutumwa...">
+  <button onclick="sendMessage()">Ohereza</button>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    // Firebase config yawe Ntakuyihinduye na gato 🔥
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87",
+      databaseURL: "https://murikimpano-default-rtdb.firebaseio.com" // wihutishe kujya kuri Firebase ukore database kugira ngo iyi ikore
+    };
+
+    // Tangira Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function sendMessage() {
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (name && message) {
+        db.ref("messages").push({
+          name: name,
+          message: message
+        });
+
+        document.getElementById('message').value = "";
+      }
+    }
+
+    const chatBox = document.getElementById("chat-box");
+    db.ref("messages").on("child_added", function(snapshot) {
+      const data = snapshot.val();
+      const div = document.createElement("div");
+      div.textContent = `${data.name}: ${data.message}`;
+      chatBox.appendChild(div);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>
