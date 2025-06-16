@@ -1,59 +1,27 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Murikimpano Payment Confirmation</title>
+  <meta charset="UTF-8">
+  <title>Contact Info - Murikimpano</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <h2>Payment Confirmation Form</h2>
-  <form action="process-payment.php" method="POST">
-    <label>Izina ryawe:</label><br>
-    <input type="text" name="name" required><br><br>
-
-    <label>Email cyangwa Phone:</label><br>
-    <input type="text" name="contact" required><br><br>
-
-    <label>Crypto wakoresheje:</label><br>
-    <select name="crypto" required>
-      <option>USDT (TRC20)</option>
-      <option>USDT (BEP20)</option>
-      <option>Bitcoin (BTC)</option>
-      <option>Litecoin (LTC)</option>
-      <option>Ethereum (ETH)</option>
-      <option>XRP</option>
-      <option>BNB</option>
-      <option>Solana</option>
-      <option>Toncoin</option>
-    </select><br><br>
-
-    <label>Transaction ID (TxID):</label><br>
-    <input type="text" name="txid" required><br><br>
-
-    <label>Ibyo wishyuye (service / product):</label><br>
-    <input type="text" name="details" required><br><br>
-
-    <input type="submit" value="Ohereza Kwemeza Uwishyuye">
-  </form>
+  <h1>📞 Contact Info</h1>
+  <p>Phone: <a href="tel:+25768519434">+25768519434</a></p>
+  <p>WhatsApp: <a href="https://wa.me/25765702755" target="_blank">+25765702755</a></p>
+  <p>Email: <a href="mailto:gilbertgnbndayi@gmail.com">gilbertgnbndayi@gmail.com</a></p>
+  
+  <br><br>
+  <a href="index.html">⬅️ Subira kuri Homepage</a>
 </body>
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $_POST['name'];
-  $contact = $_POST['contact'];
-  $crypto = $_POST['crypto'];
-  $txid = $_POST['txid'];
-  $details = $_POST['details'];
-
-  $to = "gilbertgnbndayi@gmail.com"; // Aha niho bizajya bijya
-  $subject = "Payment Confirmation from $name";
-  $message = "Name: $name\nContact: $contact\nCrypto: $crypto\nTxID: $txid\nDetails: $details";
-  $headers = "From: confirmation@murikimpano.com";
-
-  if (mail($to, $subject, $message, $headers)) {
-    echo "Ubutumwa bwo kwemeza bwatanzwe neza!";
-  } else {
-    echo "Byanze kohereza email. Gerageza kandi.";
-  }
-}
-?>
