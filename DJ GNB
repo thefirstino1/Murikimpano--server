@@ -103,5 +103,13 @@ Murikimpano server by DJ GNB
     document.getElementById("homeText").innerText = translations[lang].homeText;
   }
 </script>
+<!-- CONTACT INFO BUTTON -->
+<div style="text-align: center; margin-top: 40px;">
+  <a href="contact.html">
+    <button style="padding: 12px 24px; font-size: 18px; background-color: #007BFF; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      📞 Contact Info
+    </button>
+  </a>
+</div>
 </body>
 </html>
