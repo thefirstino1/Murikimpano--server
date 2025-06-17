@@ -1,82 +1,131 @@
 <!DOCTYPE html>
 <html lang="rw">
-
-  
 <head>
-
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Murikimpano Server</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murikimpano | Urupapuro Rw'itangiriro</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f2f2f2;
-      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #1f2937, #111827);
+      color: #fff;
     }
-    nav {
-      background-color: #007BFF;
-      padding: 15px;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: #111827;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
+
+    header h1 {
+      font-size: 28px;
+      color: #10b981;
+    }
+
     nav a {
-      color: white;
       margin: 0 15px;
       text-decoration: none;
+      color: #f3f4f6;
       font-weight: bold;
     }
-    h1 {
-      margin-top: 50px;
-      color: #333;
+
+    nav a:hover {
+      color: #10b981;
     }
-    .buttons {
-      margin-top: 30px;
+
+    .hero {
+      padding: 100px 20px;
+      text-align: center;
+      background-image: url("logomu.jpg");
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: multiply;
+      background-color: rgba(0, 0, 0, 0.7);
     }
-    .buttons a button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      background-color: #28a745;
-      color: white;
+
+    .hero h2 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    .hero button {
+      padding: 15px 30px;
+      background-color: #10b981;
       border: none;
-      border-radius: 5px;
+      border-radius: 30px;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .hero button:hover {
+      background-color: #059669;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1f2937;
+      font-size: 14px;
+      color: #ccc;
     }
   </style>
 </head>
 <body>
 
+  <header>
+    <h1>Murikimpano</h1>
+    <nav>
+      <a href="index.html">Ahabanza</a>
+      <a href="services.html">Serivisi</a>
+      <a href="crypto.html">Crypto</a>
+      <a href="contact.html">Tuvugishe</a>
+      <a href="login.html">Injira</a>
+      <a href="register.html">Iyandikishe</a>
+    </nav>
+  </header>
 
-  
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="Crypto.html">Crypto</a>
-<a href="crypto.html" target="_blank">
-  <button style="padding: 12px 24px; font-size: 18px; background-color: #1abc9c; color: white; border: none; border-radius: 8px; cursor: pointer;">
-    IMPANO YANJE, INGODO YANJE
-  </button>
-</a>
-<a href="Chat.room.thml" target="_blank">
-  Injira muri Chat Room
-  <button onclick="window.location.href='Login.html'">Login</button>
-</a>
-    
-  </nav>
+  <section class="hero">
+    <h2>Tanga Impano yawe | Murikimpano</h2>
+    <p>
+      Murikimpano ni ahantu wige ikoranabuhanga, cryptocurrency, ama robot, ndetse no gufata amafoto n’ama video meza.
+      Reba uko twaguteguriye serivisi zihariye zigezweho.
+    </p>
+    <a href="services.html"><button>Reba Serivisi</button></a>
+  </section>
 
-  <h1>Murakaza neza kuri Murikimpano</h1>
-  <p>aho uherereye kwisi yose  🌍</p>
+  <footer>
+    &copy; 2025 Murikimpano - By GNB Boss. All Rights Reserved.
+  </footer>
 
-  
-  <div class="buttons">
-    <a href="Services.html"><button>Reba Serivisi</button></a>
-    <a href="Contact.html"><button>Contact Info</button></a>
-    <a href="Assets.html"><button>assets fils</button></a>
-    <a href="Client.html"><button>client</button></a>
-  </div>
+  <!-- Firebase SDK config: urashobora kuzayikoresha niba ukeneye firebase features kuri homepage -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+    const app = initializeApp(firebaseConfig);
+  </script>
 
-  
 </body>
-
-  
 </html>
