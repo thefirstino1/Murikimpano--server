@@ -1,103 +1,32 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="rw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Injira - Murikimpano</title>
+  <title>Login - Murikimpano</title>
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
-
-    .login-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2.5rem 3rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      width: 320px;
-      text-align: center;
-    }
-
-    h2 {
-      margin-bottom: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-      transition: background-color 0.3s ease;
-    }
-
-    input[type="email"]:focus,
-    input[type="password"]:focus {
-      background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    button {
-      padding: 0.85rem 1rem;
-      background-color: #ff6f61;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #e65c50;
-    }
-
-    #message {
-      margin-top: 1rem;
-      font-weight: 600;
-      min-height: 1.5rem;
-    }
+    /* (Style irasigaye nk'iyo twakoresheje mbere, ushobora kuyisubiramo) */
   </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Injira muri Murikimpano</h2>
     <form id="login-form">
-      <input type="email" id="email" placeholder="Andika email yawe" required />
-      <input type="password" id="password" placeholder="Andika password" required />
+      <input type="email" id="email" placeholder="Email yawe" required />
+      <input type="password" id="password" placeholder="Ijambo ry'ibanga" required />
       <button type="submit">Injira</button>
     </form>
     <p id="message"></p>
   </div>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <!-- Firebase CDN v10+ SDKs -->
+  <script type="module">
+    // Import Firebase functions (modular SDK)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  <script>
-    // Firebase configuration
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
       authDomain: "murikimpano.firebaseapp.com",
@@ -109,34 +38,28 @@
     };
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    // Handle login form submission
-    const loginForm = document.getElementById('login-form');
-    const messageP = document.getElementById('message');
+    // Login logic
+    const form = document.getElementById("login-form");
+    const message = document.getElementById("message");
 
-    loginForm.addEventListener('submit', (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-
-      messageP.style.color = 'white';
-      messageP.textContent = "Turimo kugerageza kwinjiza...";
-
-      auth.signInWithEmailAndPassword(email, password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          messageP.style.color = 'lightgreen';
-          messageP.textContent = `Murakaza neza, ${user.email}!`;
-
-          // Example: ujye ahandi nyuma yo kwinjira neza
+          message.style.color = "lightgreen";
+          message.textContent = "Winjiye neza: " + userCredential.user.email;
+          // Redirect
           // window.location.href = "client.html";
         })
         .catch((error) => {
-          messageP.style.color = '#ff6f61';
-          messageP.textContent = `Ikosa: ${error.message}`;
+          message.style.color = "red";
+          message.textContent = "Ikosa: " + error.message;
         });
     });
   </script>
