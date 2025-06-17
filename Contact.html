@@ -1,27 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rw">
 <head>
   <meta charset="UTF-8">
-  <title>Contact Info - Murikimpano</title>
+  <title>Tuvugishe - Murikimpano</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
+      background-color: #f9f9f9;
+      padding: 40px;
     }
-    a {
-      color: #007BFF;
+
+    nav {
+      background-color: #007BFF;
+      padding: 15px 20px;
+    }
+
+    nav a {
+      color: white;
       text-decoration: none;
+      margin-right: 20px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .contact-info {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 22px;
+      line-height: 1.8;
+    }
+
+    .contact-info strong {
+      color: #007BFF;
     }
   </style>
 </head>
 <body>
-  <h1>📞 Contact Info</h1>
-  <p>Phone: <a href="tel:+25768519434">+25768519434</a></p>
-  <p>WhatsApp: <a href="https://wa.me/25765702755" target="_blank">+25765702755</a></p>
-  <p>Email: <a href="mailto:gilbertgnbndayi@gmail.com">gilbertgnbndayi@gmail.com</a></p>
-  
-  <br><br>
-  <a href="index.html">⬅️ Subira kuri Homepage</a>
+
+  <nav>
+    <a href="index.html">🏠 Home</a>
+    <a href="services.html">🛠️ Serivisi</a>
+    <a href="contact.html">📞 Contact</a>
+  </nav>
+
+  <h1>Tuvugishe</h1>
+
+  <div class="contact-info">
+    <p><strong>📞 Phone:</strong> +257 68519434</p>
+    <p><strong>📱 WhatsApp:</strong> +257 65702755</p>
+    <p><strong>✉️ Email:</strong> gilbertgnbndayi@gmail.com</p>
+    <p><strong>🌐 Website:</strong> <a href="https://murikimpano-server.vercel.app/" target="_blank">murikimpano-server.vercel.app</a></p>
+  </div>
+
 </body>
 </html>
