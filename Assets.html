@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assets - Amagoto, Video, Audio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #fafafa;
+      color: #333;
+    }
+    h1 {
+      color: #0077b6;
+    }
+    .media-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .media-item {
+      width: 300px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 10px;
+      background-color: white;
+      border-radius: 8px;
+    }
+    .media-item img,
+    .media-item video,
+    .media-item audio {
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .caption {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Amagoto, Video na Audio - Assets</h1>
+
+  <div class="media-container">
+
+    <!-- Image Example -->
+    <div class="media-item">
+      <img src="assets/images/ishusho1.jpg" alt="Ishusho ya mbere" />
+      <div class="caption">Ishusho ya mbere</div>
+    </div>
+
+    <!-- Another Image -->
+    <div class="media-item">
+      <img src="assets/images/ishusho2.png" alt="Ishusho ya kabiri" />
+      <div class="caption">Ishusho ya kabiri</div>
+    </div>
+
+    <!-- Video Example -->
+    <div class="media-item">
+      <video controls>
+        <source src="assets/videos/umuvideo.mp4" type="video/mp4" />
+        Browser yawe ntishyigikira video.
+      </video>
+      <div class="caption">Video y'icyitegererezo</div>
+    </div>
+
+    <!-- Audio Example -->
+    <div class="media-item">
+      <audio controls>
+        <source src="assets/audio/umuziki.mp3" type="audio/mpeg" />
+        Browser yawe ntishyigikira audio.
+      </audio>
+      <div class="caption">Indirimbo y'icyitegererezo</div>
+    </div>
+
+  </div>
+</body>
+</html>
