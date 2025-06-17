@@ -1,71 +1,69 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Injira - Murikimpano</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e5e5e5;
-      padding: 40px;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .link {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .link a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Murikimpano</title>
 </head>
 <body>
-  <div class="container">
-    <h2>Injira muri Murikimpano</h2>
-    <form action="#" method="POST">
-      <input type="email" name="email" placeholder="Email yawe" required>
-      <input type="password" name="password" placeholder="Ijambo banga" required>
-      <button type="submit">Injira</button>
-    </form>
-    <div class="link">
-      <p>Wibagiye ijambo banga? <a href="forgot-password.html">Kanda hano</a></p>
-      <p>Nturariyandikisha? <a href="register.html">Iyandikishe</a></p>
-    </div>
-  </div>
+
+  <h2>Injira muri konti yawe</h2>
+
+  <form id="login-form">
+    <input type="email" id="email" placeholder="Andika email yawe" required /><br />
+    <input type="password" id="password" placeholder="Andika password" required /><br />
+    <button type="submit">Injira</button>
+  </form>
+
+  <p id="message"></p>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Handle login form submission
+    const loginForm = document.getElementById('login-form');
+    const messageP = document.getElementById('message');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();  // Stop form from submitting normally
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Login successful
+          const user = userCredential.user;
+          messageP.style.color = 'green';
+          messageP.textContent = "Winjiye neza, Murakaza neza " + user.email;
+
+          // Ushobora kuyobora user ahandi: example
+          // window.location.href = "client.html";
+        })
+        .catch((error) => {
+          // Show error message
+          messageP.style.color = 'red';
+          messageP.textContent = "Ikosa: " + error.message;
+        });
+    });
+  </script>
+
 </body>
 </html>
