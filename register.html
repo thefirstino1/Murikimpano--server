@@ -1,72 +1,73 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Iyandikishe - Murikimpano</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 40px;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: green;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .link {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .link a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-  </style>
+  <title>Register - Murikimpano</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h2>Iyandikishe</h2>
-    <form action="#" method="POST">
-      <input type="text" name="fullname" placeholder="Izina ryuzuye" required>
-      <input type="email" name="email" placeholder="Email yawe" required>
-      <input type="tel" name="phone" placeholder="Numero ya Telephone" required>
-      <input type="password" name="password" placeholder="Ijambo banga" required>
+  <div class="register-box">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Izina" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Ijambo banga" required />
       <button type="submit">Iyandikishe</button>
     </form>
-    <div class="link">
-      <p>Usanzwe ufite compte? <a href="login.html">Injira hano</a></p>
-    </div>
   </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+  <script>
+    // Firebase configuration yawe
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+
+    // Tangura Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Fungura form
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Iyandikishe muri Auth
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // Bika andi makuru muri Firestore
+          db.collection("users").add({
+            name: name,
+            email: email,
+            uid: user.uid,
+            createdAt: new Date()
+          })
+          .then(() => {
+            alert("Wanditswe neza!");
+            window.location.href = "login.html";
+          })
+          .catch((error) => {
+            console.error("Ikosa kubika muri Firestore: ", error);
+          });
+        })
+        .catch((error) => {
+          alert("Ikosa mu kwiyandikisha: " + error.message);
+        });
+    });
+  </script>
 </body>
 </html>
