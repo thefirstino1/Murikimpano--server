@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MURIKIMPANO | By GNB Boss</title>
+  <title>MURIKIMPANO | GNB Boss</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN (Igezweho & Responsive) -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase SDK (ES Modules) -->
   <script type="module">
-    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 
@@ -27,7 +26,6 @@
       measurementId: "G-08Q2CKEE87"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
   </script>
@@ -39,23 +37,29 @@
       background-size: cover;
     }
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.7);
     }
-    .hero-button:hover {
+    .glow-btn {
+      transition: all 0.3s ease-in-out;
+    }
+    .glow-btn:hover {
       transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
     }
   </style>
 </head>
 <body class="h-screen w-full flex items-center justify-center overlay text-white">
 
-  <div class="text-center p-10 bg-black bg-opacity-60 rounded-xl shadow-lg max-w-xl">
-    <h1 class="text-4xl font-bold mb-4">Murakaza neza kuri <span class="text-yellow-400">MURIKIMPANO</span></h1>
-    <p class="mb-6 text-lg">Urubuga rwawe rw'ikoranabuhanga, ubuhanzi, crypto, na social media.</p>
+  <div class="text-center p-8 bg-black bg-opacity-70 rounded-2xl shadow-2xl max-w-xl w-full">
+    <h1 class="text-5xl font-bold mb-4"><span class="text-yellow-400">MURIKIMPANO</span></h1>
+    <p class="mb-6 text-lg leading-relaxed">By GNB Boss - Ikoranabuhanga, Ubuhanzi, Crypto, na Social Media bihuriye hano.</p>
 
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="register.html" class="hero-button px-6 py-3 bg-yellow-400 text-black rounded-full font-semibold transition transform hover:scale-105">Iyandikishe</a>
-      <a href="login.html" class="hero-button px-6 py-3 bg-transparent border-2 border-yellow-400 rounded-full font-semibold hover:bg-yellow-400 hover:text-black transition">Injira</a>
-      <a href="client.html" class="hero-button px-6 py-3 bg-blue-500 rounded-full font-semibold hover:bg-blue-600 transition">Serivisi zacu</a>
+    <div class="flex flex-wrap justify-center gap-4 mt-6">
+      <a href="register.html" class="glow-btn px-6 py-3 bg-yellow-400 text-black font-bold rounded-full">Iyandikishe</a>
+      <a href="login.html" class="glow-btn px-6 py-3 bg-blue-500 hover:bg-blue-600 font-bold rounded-full">Injira</a>
+      <a href="client.html" class="glow-btn px-6 py-3 bg-green-500 hover:bg-green-600 font-bold rounded-full">Serivisi zacu</a>
+      <a href="contact.html" class="glow-btn px-6 py-3 bg-pink-500 hover:bg-pink-600 font-bold rounded-full">Twandikire</a>
+      <a href="dashboard.html" class="glow-btn px-6 py-3 bg-gray-800 hover:bg-gray-700 font-bold rounded-full">Dashboard</a>
     </div>
   </div>
 
