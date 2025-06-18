@@ -2,47 +2,236 @@
 <html lang="rw">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Page</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murikimpano - Serivisi ku Bakiriya</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f7f9fc;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+    }
+
+    header {
+      background: #0f52ba;
+      padding: 1.5rem;
       text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      box-shadow: 0 0 15px #0f52ba88;
     }
-    h1 {
-      color: #0077b6;
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #1c1c1c;
+      border-radius: 16px;
+      box-shadow: 0 0 20px #0f52ba55;
     }
-    .btn-container {
-      margin-top: 30px;
+
+    section {
+      margin-bottom: 2rem;
     }
-    .btn {
-      display: inline-block;
-      padding: 15px 30px;
-      margin: 10px;
-      font-size: 16px;
-      background-color: #00b4d8;
-      color: white;
-      text-decoration: none;
+
+    h2 {
+      color: #0f52ba;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    ul.services {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.services li {
+      background: #222;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-left: 5px solid #0f52ba;
       border-radius: 8px;
-      transition: background-color 0.3s;
+      font-size: 1.1rem;
     }
-    .btn:hover {
-      background-color: #0077b6;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    input, textarea {
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    button {
+      background: #0f52ba;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #094a99;
+      transform: scale(1.05);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .contact-links a {
+      background: #0f52ba;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px #0f52ba88;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .contact-links a:hover {
+      background: #094a99;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Page y’Abakiriya</h1>
-  <p>Hitamo icyo ushaka gukora:</p>
 
-  <div class="btn-container">
-    <a class="btn" href="register.html">📝 Kwiyandikisha</a>
-    <a class="btn" href="login.html">🔑 Kwinjira</a>
-    <a class="btn" href="forgot-password.html">❓ Wibagiwe Password?</a>
-    <a class="btn" href="index.html">⬅️ Subira kuri Homepage</a>
-  </div>
+<header>Serivisi ku Bakiriya - Murikimpano</header>
+
+<main>
+  <!-- Services Section -->
+  <section>
+    <h2>Ibyo dukora</h2>
+    <ul class="services">
+      <li>Gufotora & Gutunganya amafoto (Photo Editing)</li>
+      <li>Gukora no Gushushanya Logo</li>
+      <li>Video Editing na Montage</li>
+      <li>Ubujyanama mu byerekeye Cryptocurrency & Technology</li>
+      <li>Gucapa (Printing) & Gukora Design y'ibikoresho</li>
+      <li>Gufasha abantu ku mbuga nkoranyambaga (Content Creation)</li>
+    </ul>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section>
+    <h2>Ohereza ubutumwa</h2>
+    <form id="clientForm">
+      <input type="text" id="name" placeholder="Izina ryawe" required />
+      <input type="email" id="email" placeholder="Email yawe" required />
+      <textarea id="message" placeholder="Andika ubutumwa bwawe hano..." required></textarea>
+      <button type="submit">Ohereza</button>
+    </form>
+    <div id="statusMsg" style="margin-top:1rem;font-weight:bold;color:#0f52ba;"></div>
+  </section>
+
+  <!-- Social Media Links -->
+  <section>
+    <h2>Twandikire cyangwa dukurikire</h2>
+    <div class="contact-links">
+      <a href="mailto:gilbertgnbndayi@gmail.com">📧 Email</a>
+      <a href="https://wa.me/25765702755" target="_blank">📱 WhatsApp</a>
+      <a href="https://t.me/68519434" target="_blank">💬 Telegram</a>
+      <a href="https://www.youtube.com/@murikimpano" target="_blank">📺 YouTube</a>
+      <a href="https://twitter.com/thefirstino" target="_blank">🐦 Twitter</a>
+      <a href="https://instagram.com/thefirstino" target="_blank">📸 Instagram</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2025 Murikimpano | GNB Flash Boy | @thefirstino
+</footer>
+
+<!-- Firebase & Form Logic -->
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+    authDomain: "murikimpano.firebaseapp.com",
+    projectId: "murikimpano",
+    storageBucket: "murikimpano.firebasestorage.app",
+    messagingSenderId: "288360394906",
+    appId: "1:288360394906:web:036db545a633f8eba5af23",
+    measurementId: "G-08Q2CKEE87"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Form handling
+  const form = document.getElementById('clientForm');
+  const statusMsg = document.getElementById('statusMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    if (!name || !email || !message) {
+      statusMsg.textContent = "Uzuza neza amakuru yose!";
+      return;
+    }
+
+    try {
+      await db.collection('clientMessages').add({
+        name,
+        email,
+        message,
+        timestamp: new Date()
+      });
+      statusMsg.textContent = "Ubutumwa bwoherejwe neza!";
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      statusMsg.textContent = "Habaye ikosa mu kohereza ubutumwa.";
+    }
+  });
+</script>
+
 </body>
 </html>
