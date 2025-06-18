@@ -1,61 +1,235 @@
 <!DOCTYPE html>
 <html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Tuvugishe - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact - Murikimpano</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
   <style>
+    /* Style nziza, modern, dark theme with accent colors */
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      padding: 40px;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    nav {
-      background-color: #007BFF;
-      padding: 15px 20px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-right: 20px;
-      font-weight: bold;
-    }
-
-    h1 {
-      font-size: 36px;
-      color: #333;
+    header {
+      background-color: #0f52ba;
+      padding: 1.5rem 2rem;
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: white;
+      box-shadow: 0 2px 8px #0f52baaa;
+    }
+
+    main {
+      flex: 1;
+      max-width: 700px;
+      margin: 2rem auto;
+      background: #1e1e1e;
+      padding: 2rem 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #0f52ba66;
+    }
+
+    h2 {
+      color: #0f52ba;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
 
     .contact-info {
-      max-width: 800px;
-      margin: auto;
-      background-color: #fff;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      font-size: 22px;
-      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      font-size: 1.1rem;
+      line-height: 1.5;
     }
 
-    .contact-info strong {
-      color: #007BFF;
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #222;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0f52ba44;
+      transition: background-color 0.3s ease;
+    }
+    .contact-item:hover {
+      background-color: #0f52ba22;
+      cursor: pointer;
+    }
+
+    .contact-label {
+      font-weight: 700;
+      min-width: 100px;
+      color: #0f52ba;
+    }
+
+    a.contact-link {
+      color: #eee;
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+      transition: color 0.3s ease;
+    }
+    a.contact-link:hover {
+      color: #64b5f6;
+    }
+
+    /* Buttons for social media */
+    .social-buttons {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      background-color: #0f52ba;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 12px #0f52ba99;
+      transition: background-color 0.3s ease, transform 0.25s ease;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .social-btn:hover {
+      background-color: #094a99;
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px #094a9988;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      color: #666;
+      background: #121212;
+      user-select: none;
+      margin-top: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main {
+        margin: 1rem;
+        padding: 1.5rem 1.8rem;
+      }
+      .contact-label {
+        min-width: 90px;
+        font-size: 1rem;
+      }
+      .contact-info {
+        font-size: 1rem;
+      }
+      .social-buttons {
+        gap: 15px;
+      }
+      .social-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Tuvugishe</h1>
+<header>Contact Murikimpano - GNB Flash Boy</header>
 
+<main>
+  <h2>Twandikire cyangwa utwandikire kuri social media</h2>
   <div class="contact-info">
-    <p><strong>📞 Phone:</strong> +257 68519434</p>
-    <p><strong>📱 WhatsApp:</strong> +257 65702755</p>
-    <p><strong>✉️ Email:</strong> gilbertgnbndayi@gmail.com</p>
-    <p><strong>🌐 Website:</strong> <a href="https://murikimpano-server.vercel.app/" target="_blank">murikimpano-server.vercel.app</a></p>
+
+    <div class="contact-item" onclick="window.location.href='tel:+25768519434'">
+      <span class="contact-label">Telephone:</span>
+      <a href="tel:+25768519434" class="contact-link">+257 685 19434</a>
+    </div>
+
+    <div class="contact-item" onclick="window.location.href='mailto:gilbertgnbndayi@gmail.com'">
+      <span class="contact-label">Email:</span>
+      <a href="mailto:gilbertgnbndayi@gmail.com" class="contact-link">gilbertgnbndayi@gmail.com</a>
+    </div>
+
+    <div class="contact-item" onclick="window.open('https://www.youtube.com/@murikimpano', '_blank')">
+      <span class="contact-label">YouTube:</span>
+      <a href="https://www.youtube.com/@murikimpano" target="_blank" rel="noopener" class="contact-link">murikimpano</a>
+    </div>
+
+    <div class="contact-item" onclick="window.open('https://t.me/68519434', '_blank')">
+      <span class="contact-label">Telegram:</span>
+      <a href="https://t.me/68519434" target="_blank" rel="noopener" class="contact-link">68519434</a>
+    </div>
+
+    <div class="contact-item" onclick="window.open('https://twitter.com/thefirstino', '_blank')">
+      <span class="contact-label">Twitter:</span>
+      <a href="https://twitter.com/thefirstino" target="_blank" rel="noopener" class="contact-link">@thefirstino</a>
+    </div>
+
+    <div class="contact-item" onclick="window.open('https://instagram.com/thefirstino', '_blank')">
+      <span class="contact-label">Instagram:</span>
+      <a href="https://instagram.com/thefirstino" target="_blank" rel="noopener" class="contact-link">@thefirstino</a>
+    </div>
+
   </div>
+
+  <div class="social-buttons" aria-label="Social Media Buttons">
+    <a href="https://www.youtube.com/@murikimpano" target="_blank" class="social-btn" rel="noopener" aria-label="YouTube Channel">
+      📺 YouTube
+    </a>
+    <a href="https://t.me/68519434" target="_blank" class="social-btn" rel="noopener" aria-label="Telegram">
+      💬 Telegram
+    </a>
+    <a href="https://twitter.com/thefirstino" target="_blank" class="social-btn" rel="noopener" aria-label="Twitter">
+      🐦 Twitter
+    </a>
+    <a href="https://instagram.com/thefirstino" target="_blank" class="social-btn" rel="noopener" aria-label="Instagram">
+      📸 Instagram
+    </a>
+  </div>
+</main>
+
+<footer>
+  © 2025 Murikimpano | By GNB Flash Boy
+</footer>
+
+<script>
+  // Initialize Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+    authDomain: "murikimpano.firebaseapp.com",
+    projectId: "murikimpano",
+    storageBucket: "murikimpano.firebasestorage.app",
+    messagingSenderId: "288360394906",
+    appId: "1:288360394906:web:036db545a633f8eba5af23",
+    measurementId: "G-08Q2CKEE87"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  // (Optional) Ushobora kongeraho functions zohereza messages kuri firebase Firestore cyangwa Realtime Database
+</script>
 
 </body>
 </html>
