@@ -1,87 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Murikimpano Chat Room</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
   <style>
     body {
-      font-family: Arial;
-      background-color: #f1f1f1;
-      padding: 20px;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
 
-    #chat-box {
-      width: 100%;
-      max-width: 600px;
-      height: 400px;
-      overflow-y: scroll;
-      background: white;
-      padding: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
+    header {
+      background: #0f52ba;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 2px 10px #0f52ba88;
     }
 
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 5px;
+    #chatContainer {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background: #1e1e1e;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      background: #2a2a2a;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      max-width: 70%;
+      word-wrap: break-word;
+      box-shadow: 0 0 5px #0f52ba55;
+    }
+
+    .message.me {
+      align-self: flex-end;
+      background: #0f52ba;
+      color: white;
+    }
+
+    .message.other {
+      align-self: flex-start;
+    }
+
+    #messageForm {
+      display: flex;
+      padding: 1rem;
+      background: #121212;
+      gap: 1rem;
+      border-top: 1px solid #333;
+    }
+
+    #nameInput, #messageInput {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #2a2a2a;
+      color: white;
+    }
+
+    #sendBtn {
+      background: #0f52ba;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #sendBtn:hover {
+      background: #094a99;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+      color: #777;
+      background: #121212;
     }
   </style>
 </head>
 <body>
 
-  <h2>Murakaza neza kuri <strong>Murikimpano Chat Room</strong> 🗨️</h2>
+<header>Murikimpano Chat Room</header>
 
-  <div id="chat-box"></div>
+<div id="chatContainer">
+  <!-- Messages ziza hano -->
+</div>
 
-  <input type="text" id="name" placeholder="Izina ryawe">
-  <br>
-  <input type="text" id="message" placeholder="Andika ubutumwa...">
-  <button onclick="sendMessage()">Ohereza</button>
+<form id="messageForm">
+  <input type="text" id="nameInput" placeholder="Izina ryawe..." required />
+  <input type="text" id="messageInput" placeholder="Andika ubutumwa..." required />
+  <button type="submit" id="sendBtn">Ohereza</button>
+</form>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<footer>© 2025 Murikimpano | Chat Room</footer>
 
-  <script>
-    // Firebase config yawe Ntakuyihinduye na gato 🔥
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87",
-      databaseURL: "https://murikimpano-default-rtdb.firebaseio.com" // wihutishe kujya kuri Firebase ukore database kugira ngo iyi ikore
-    };
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+    authDomain: "murikimpano.firebaseapp.com",
+    projectId: "murikimpano",
+    storageBucket: "murikimpano.firebasestorage.app",
+    messagingSenderId: "288360394906",
+    appId: "1:288360394906:web:036db545a633f8eba5af23",
+    measurementId: "G-08Q2CKEE87"
+  };
 
-    // Tangira Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-    function sendMessage() {
-      const name = document.getElementById('name').value.trim();
-      const message = document.getElementById('message').value.trim();
+  const chatContainer = document.getElementById("chatContainer");
+  const form = document.getElementById("messageForm");
+  const nameInput = document.getElementById("nameInput");
+  const messageInput = document.getElementById("messageInput");
 
-      if (name && message) {
-        db.ref("messages").push({
-          name: name,
-          message: message
-        });
-
-        document.getElementById('message').value = "";
-      }
-    }
-
-    const chatBox = document.getElementById("chat-box");
-    db.ref("messages").on("child_added", function(snapshot) {
-      const data = snapshot.val();
-      const div = document.createElement("div");
-      div.textContent = `${data.name}: ${data.message}`;
-      chatBox.appendChild(div);
-      chatBox.scrollTop = chatBox.scrollHeight;
+  // Listen for new messages (real-time updates)
+  db.collection("chatMessages")
+    .orderBy("timestamp")
+    .onSnapshot((snapshot) => {
+      chatContainer.innerHTML = ""; // Clear
+      snapshot.forEach((doc) => {
+        const msg = doc.data();
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("message");
+        msgDiv.classList.add(msg.name === nameInput.value.trim() ? "me" : "other");
+        msgDiv.textContent = `${msg.name}: ${msg.message}`;
+        chatContainer.appendChild(msgDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
     });
-  </script>
+
+  // Send message
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = nameInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (name && message) {
+      await db.collection("chatMessages").add({
+        name,
+        message,
+        timestamp: new Date()
+      });
+      messageInput.value = "";
+    }
+  });
+</script>
+
 </body>
 </html>
