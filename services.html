@@ -1,71 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Services - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Serivisi Dutanga | MURIKIMPANO</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+    }
+    .card {
+      background-color: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
       padding: 20px;
-      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    h1 {
-      font-size: 32px;
-      margin-bottom: 30px;
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
     }
-    .service {
-      margin-bottom: 40px;
+    .glow-btn {
+      background-color: #facc15;
+      color: #000;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
     }
-    .service h2 {
-      font-size: 24px;
-      color: #007BFF;
-    }
-    .service p {
-      font-size: 16px;
-      max-width: 600px;
-      margin: 10px auto;
-    }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      text-decoration: none;
-      color: #007BFF;
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
     }
   </style>
+
+  <!-- Firebase Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </head>
-<body>
-  <h1>🛠️ Serivisi za Murikimpano</h1>
 
-  <div class="service">
-    <h2>🖼️ Gucapa Amafoto</h2>
-    <p>Ducapa amafoto meza mu buryo bwa digital na classic ku mpapuro z'ubwoko butandukanye.</p>
+<body class="p-6">
+  <h1 class="text-4xl font-bold text-center text-yellow-400 mb-10">Serivisi Dutanga muri <span class="text-blue-400">MURIKIMPANO</span></h1>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Service 1: Logo Design -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">🎨 Gukora Logo</h2>
+      <p class="mb-4 text-sm">Dukora ama logo y'umwimerere, agezweho, akurura abantu kandi yihariye. Niba ushaka logo y'ikigo, YouTube, business cyangwa personal brand, turagufasha!</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
+    <!-- Service 2: Photo Editing & Printing -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">📸 Gutunganya & Gusohora Amafoto</h2>
+      <p class="mb-4 text-sm">Dutunganya amafoto mu buryo bugezweho tukayakusanyiriza kuri flash, CD cyangwa tukayacapura ku mpapuro z’ubwiza buhebuje.</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
+    <!-- Service 3: Tech & Social Media Lessons -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">🧠 Kwigisha Ikoranabuhanga</h2>
+      <p class="mb-4 text-sm">Twigisha uburyo bwo gukora website, gukora YouTube channel, social media marketing, content creation n'ibindi byinshi bifasha abakiri bato gutera imbere mu ikoranabuhanga.</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
+    <!-- Service 4: Cryptocurrency Consulting -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">💰 Cryptocurrency Services</h2>
+      <p class="mb-4 text-sm">Turafasha gusobanukirwa na crypto, wallet management, trading, investing, ndetse n’uko wakwinjiza amafaranga mu buryo bwizewe ukoresheje blockchain.</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
+    <!-- Service 5: Studio Services -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">🎤 Studio (Audio & Video)</h2>
+      <p class="mb-4 text-sm">Tufite studio ifasha abahanzi gukora amajwi (recording, mixing, mastering) n’amashusho meza cyane. Turakira buri wese wifuza ubuziranenge buhambaye.</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
+    <!-- Service 6: Printing Services -->
+    <div class="card">
+      <h2 class="text-xl font-bold mb-2 text-yellow-300">🖨️ Gusohora & Gucapa</h2>
+      <p class="mb-4 text-sm">Ducapa impapuro, amakarita, amanota, CV, fiche de paie n’ibindi byose. Turatanga service yihuta kandi itanga umusaruro mwiza.</p>
+      <a href="contact.html" class="glow-btn">Tumenye</a>
+    </div>
+
   </div>
 
-  <div class="service">
-    <h2>🧠 Gukora Logo</h2>
-    <p>Tugukorera logo yihariye ijyanye n’izina ryawe, brand yawe, cyangwa business yawe.</p>
-  </div>
-
-  <div class="service">
-    <h2>🎥 Gutunganya Amashusho</h2>
-    <p>Ushaka gukora video ya YouTube, indirimbo, cyangwa promotion? Twabigufashamo neza.</p>
-  </div>
-
-  <div class="service">
-    <h2>💡 Tech Support</h2>
-    <p>Dutanga ubufasha mu ikoranabuhanga, mobile apps, computers, na social media.</p>
-  </div>
-
-  <div class="service">
-    <h2>💸 Kwakira Cryptocurrency</h2>
-    <p>Tugufasha kwakira amafaranga hifashishijwe TRX, BTC, ETH, USDT, TON, n’izindi.</p>
-  </div>
-
-  <div class="service">
-    <h2>🌐 Gukora Website</h2>
-    <p>Turubaka websites za kinyamwuga: frontend + backend + hosting kuri Render na Vercel.</p>
-  </div>
-
-  <a href="index.html">⬅️ Subira kuri Homepage</a>
+  <footer class="text-center text-sm mt-10 text-gray-400">
+    © 2025 MURIKIMPANO by GNB Boss – Uburenganzira bwose burabitswe.
+  </footer>
 </body>
 </html>
