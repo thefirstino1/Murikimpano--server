@@ -1,58 +1,126 @@
 <!DOCTYPE html>
-<html>
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | MURIKIMPANO</title>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase Configuration -->
-  <script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: white;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      padding: 20px;
+      transition: 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.3);
+    }
+
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.8);
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
     const firebaseConfig = {
-      apiKey: "ANDIKA_API_KEY_HANO",
-      authDomain: "ANDIKA_AUTH_DOMAIN_HANO",
-      projectId: "ANDIKA_PROJECT_ID_HANO",
-      storageBucket: "ANDIKA_STORAGE_BUCKET_HANO",
-      messagingSenderId: "ANDIKA_MESSAGING_ID_HANO",
-      appId: "ANDIKA_APP_ID_HANO"
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
     };
 
-    // Tangira Firebase
-    firebase.initializeApp(firebaseConfig);
-  </script>
-</head>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
 
-<body>
-  <h2>Welcome to Murikimpano Dashboard</h2>
+    const userName = document.getElementById("user-name");
+    const userEmail = document.getElementById("user-email");
 
-  <div id="userInfo">
-    <p>Murakaza neza: <span id="userEmail">Loading...</span></p>
-  </div>
-
-  <button onclick="logout()">Sohoka</button>
-
-  <script>
-    // Reba niba user yinjiyemo
-    firebase.auth().onAuthStateChanged(function(user) {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById('userEmail').textContent = user.email;
+        userName.innerText = user.displayName || "Izina ntiryatanzwe";
+        userEmail.innerText = user.email;
       } else {
-        // Nta winjiye, musubize kuri login
         window.location.href = "login.html";
       }
     });
 
-    // Gukora Logout
-    function logout() {
-      firebase.auth().signOut().then(function() {
-        alert("Warasohotse neza!");
-        window.location.href = "login.html";
-      }).catch(function(error) {
-        alert("Ikosa: " + error.message);
-      });
-    }
+    window.logout = async function () {
+      await signOut(auth);
+      window.location.href = "login.html";
+    };
   </script>
+</head>
+
+<body class="p-6">
+  <header class="text-center mb-10">
+    <h1 class="text-4xl font-bold text-yellow-400">Murakaza neza kuri Dashboard</h1>
+    <p class="text-gray-300 mt-2 text-sm">Ubu urimo gukoresha konti yawe muri MURIKIMPANO</p>
+  </header>
+
+  <section class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- User Info -->
+    <div class="card">
+      <h2 class="text-xl font-bold text-pink-400 mb-2">🧑 Umwirondoro wawe</h2>
+      <p><strong>Izina:</strong> <span id="user-name">...</span></p>
+      <p><strong>Email:</strong> <span id="user-email">...</span></p>
+    </div>
+
+    <!-- Services -->
+    <div class="card">
+      <h2 class="text-xl font-bold text-blue-400 mb-2">📋 Serivisi Dutanga</h2>
+      <ul class="list-disc ml-5 text-sm leading-6">
+        <li>Gukora Logo</li>
+        <li>Kwigisha Technology</li>
+        <li>Crypto Consulting</li>
+        <li>Studio Services</li>
+        <li>Photo Printing</li>
+      </ul>
+      <a href="services.html" class="text-yellow-400 text-sm underline mt-2 inline-block">Reba byinshi</a>
+    </div>
+
+    <!-- Payment -->
+    <div class="card">
+      <h2 class="text-xl font-bold text-green-400 mb-2">💵 Kwishyura</h2>
+      <p class="text-sm">Waba wifuza kwishyura? Kanda hasi:</p>
+      <a href="payform.html" class="glow-btn mt-3 inline-block bg-yellow-400 text-black px-5 py-2 rounded-full font-bold">Kora Ubwishyu</a>
+    </div>
+
+    <!-- Contact Support -->
+    <div class="card">
+      <h2 class="text-xl font-bold text-red-400 mb-2">☎️ Dufashe</h2>
+      <p class="text-sm">Ufite ikibazo cyangwa igitekerezo? Twohereze ubutumwa.</p>
+      <a href="contact.html" class="text-blue-400 underline text-sm">Jya kuri Contact Page</a>
+    </div>
+
+  </section>
+
+  <div class="text-center mt-10">
+    <button onclick="logout()" class="glow-btn bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-2 rounded-full">Sohoka (Logout)</button>
+  </div>
+
+  <footer class="text-center text-sm mt-8 text-gray-400">
+    © 2025 Murikimpano – By GNB Boss 🔥
+  </footer>
 </body>
 </html>
