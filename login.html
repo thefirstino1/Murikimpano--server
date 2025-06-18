@@ -1,136 +1,56 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Murikimpano | Injira</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #4f46e5, #6d28d9);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-    }
-
-    .login-box {
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 30px 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      width: 90%;
-      max-width: 400px;
-      backdrop-filter: blur(8px);
-    }
-
-    .login-box h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 26px;
-      color: #fff;
-    }
-
-    .login-box input {
-      width: 100%;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-    }
-
-    .login-box input::placeholder {
-      color: #ddd;
-    }
-
-    .login-box button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background-color: #10b981;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .login-box button:hover {
-      background-color: #059669;
-    }
-
-    #message {
-      margin-top: 15px;
-      font-size: 0.95rem;
-      text-align: center;
-      min-height: 1.5rem;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-box">
-    <h2>Injira kuri Murikimpano</h2>
-    <form id="login-form">
-      <input type="email" id="email" placeholder="Andika email yawe" required />
-      <input type="password" id="password" placeholder="Andika password yawe" required />
-      <button type="submit">Injira</button>
-    </form>
-    <p id="message"></p>
-  </div>
+  <meta charset="UTF-8">
+  <title>Login - Murikimpano</title>
 
   <!-- Firebase SDKs -->
-  <script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-    // Your Firebase config (GNB Boss)
+  <!-- Firebase Configuration -->
+  <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
+      apiKey: "ANDIKA_API_KEY_HANO",
+      authDomain: "ANDIKA_AUTH_DOMAIN_HANO",
+      projectId: "ANDIKA_PROJECT_ID_HANO",
+      storageBucket: "ANDIKA_STORAGE_BUCKET_HANO",
+      messagingSenderId: "ANDIKA_MESSAGING_ID_HANO",
+      appId: "ANDIKA_APP_ID_HANO"
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
 
-    // Login Logic
-    const form = document.getElementById("login-form");
-    const message = document.getElementById("message");
+<body>
+  <h2>Injira muri Murikimpano</h2>
 
-    form.addEventListener("submit", (e) => {
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email yawe" required><br><br>
+    <input type="password" id="password" placeholder="Ijambo banga" required><br><br>
+    <button type="submit">Injira</button>
+  </form>
+
+  <p>Wibagiwe ijambo banga? <a href="forgot-password.html">Kanda hano</a></p>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
 
-      message.style.color = "#ccc";
-      message.textContent = "Turimo kwinjiza...";
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      signInWithEmailAndPassword(auth, email, password)
+      firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          message.style.color = "#10b981";
-          message.textContent = "Winjiye neza. Turakujyana imbere...";
-          setTimeout(() => {
-            window.location.href = "client.html"; // Hindura niba hari indi page ushaka
-          }, 1500);
+          alert("Winjiye neza GNB Boss!");
+          window.location.href = "index.html"; // Urahita ujya ku rubuga rw'imbere
         })
         .catch((error) => {
-          message.style.color = "#f87171";
-          message.textContent = "Ikosa: " + error.message;
+          alert("Ikosa: " + error.message);
         });
     });
   </script>
