@@ -1,31 +1,157 @@
-function register() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const message = document.getElementById("message");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murikimpano | Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      width: 350px;
+      max-width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #111827;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 18px;
+      border-radius: 12px;
+      border: 1.8px solid #d1d5db;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 6px #2563eb;
+    }
+    button {
+      width: 100%;
+      padding: 14px 0;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      color: white;
+      font-weight: 700;
+      font-size: 17px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.7);
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #1e40af, #0891b2);
+      box-shadow: 0 8px 20px rgba(14, 64, 126, 0.85);
+    }
+    .message {
+      margin-top: 18px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      user-select: none;
+    }
+    .message.success {
+      color: #16a34a; /* green */
+    }
+    .message.error {
+      color: #dc2626; /* red */
+    }
+  </style>
+</head>
+<body>
 
-  if (!name || !email || !password) {
-    message.textContent = "Please fill out all fields.";
-    message.className = "message error";
-    return;
-  }
+  <div class="container">
+    <h2>Register to Murikimpano</h2>
+    <input type="text" id="name" placeholder="Full Name" required autocomplete="name" />
+    <input type="email" id="email" placeholder="Email Address" required autocomplete="email" />
+    <input type="password" id="password" placeholder="Password" required autocomplete="new-password" />
+    <button onclick="registerUser()">Create Account</button>
+    <div id="message" class="message"></div>
+  </div>
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      message.textContent = "Account created successfully!";
-      message.className = "message success";
-      console.log("User registered:", userCredential.user);
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
 
-      // Update display name
-      userCredential.user.updateProfile({ displayName: name })
-        .then(() => {
-          // Redirect to dashboard after profile update
-          window.location.href = "dashboard.html";
+  <script>
+    // Firebase configuration yawe
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Register user function
+    function registerUser() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const messageDiv = document.getElementById('message');
+
+      // Clear message
+      messageDiv.textContent = '';
+      messageDiv.className = 'message';
+
+      // Validation
+      if (!name || !email || !password) {
+        messageDiv.textContent = 'Please fill all fields.';
+        messageDiv.classList.add('error');
+        return;
+      }
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Update display name
+          userCredential.user.updateProfile({ displayName: name })
+            .then(() => {
+              messageDiv.textContent = 'Account created successfully!';
+              messageDiv.classList.add('success');
+              // Optionally redirect user to dashboard
+              // window.location.href = "dashboard.html";
+            });
+        })
+        .catch((error) => {
+          messageDiv.textContent = error.message;
+          messageDiv.classList.add('error');
         });
-    })
-    .catch((error) => {
-      message.textContent = error.message;
-      message.className = "message error";
-      console.error("Registration error:", error);
-    });
-}
+    }
+  </script>
+
+</body>
+</html>
