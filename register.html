@@ -6,15 +6,41 @@
   <title>Murikimpano | Register</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #2563eb, #1e40af);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       color: #fff;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: rgba(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
     }
 
     .register-box {
@@ -25,6 +51,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       width: 360px;
       max-width: 90%;
+      margin: 40px auto;
     }
 
     .register-box h2 {
@@ -84,6 +111,15 @@
 </head>
 <body>
 
+  <!-- ✅ Navigation Bar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="register.html">Register</a>
+    <a href="login.html">Login</a>
+    <a href="forgot-password.html">Forgot Password</a>
+  </nav>
+
+  <!-- ✅ Register Form Box -->
   <div class="register-box">
     <h2>Create Your Account</h2>
     <input type="text" id="name" placeholder="Full Name" required>
@@ -98,7 +134,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
 
   <script>
-    // ✅ Firebase config yawe
+    // Firebase configuration yawe
     const firebaseConfig = {
       apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
       authDomain: "murikimpano.firebaseapp.com",
@@ -112,20 +148,17 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // 🔐 Register user function
     function registerUser() {
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value.trim();
       const message = document.getElementById("message");
 
-      // 🧪 Clear previous message
       message.textContent = "";
       message.className = "message";
 
-      // 🔍 Validations
       if (!name || !email || !password) {
-        message.textContent = "Please fill out all fields.";
+        message.textContent = "Please fill all fields.";
         message.classList.add("error");
         return;
       }
@@ -136,18 +169,17 @@
         return;
       }
 
-      // ✅ Create account
       auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          return user.updateProfile({ displayName: name });
+          return userCredential.user.updateProfile({ displayName: name });
         })
         .then(() => {
-          message.textContent = "Account created successfully!";
+          message.textContent = "Account created successfully! Redirecting...";
           message.classList.add("success");
-          document.getElementById("name").value = "";
-          document.getElementById("email").value = "";
-          document.getElementById("password").value = "";
+
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 2000);
         })
         .catch((error) => {
           message.textContent = error.message;
