@@ -1,133 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register - Murikimpano</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      box-sizing: border-box;
-    }
-    body {
-      background: linear-gradient(to right, #2c3e50, #3498db);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .register-box {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      width: 100%;
-      max-width: 400px;
-    }
-    .register-box h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #2c3e50;
-    }
-    .register-box input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    .register-box button {
-      width: 100%;
-      padding: 12px;
-      background: #3498db;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .register-box button:hover {
-      background: #2980b9;
-    }
-    .register-box p {
-      margin-top: 15px;
-      text-align: center;
-    }
-    .register-box a {
-      color: #2980b9;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+  <title>Register</title>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <!-- Firebase Configuration -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "ICYANDITSWE_HANO",
+      authDomain: "project-id.firebaseapp.com",
+      projectId: "project-id",
+      storageBucket: "project-id.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdefghijk"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
 
-  <div class="register-box">
-    <h2>Murikimpano Register</h2>
-    <form id="registerForm">
-      <input type="text" id="name" placeholder="Izina ryawe" required />
-      <input type="email" id="email" placeholder="Email yawe" required />
-      <input type="password" id="password" placeholder="Ijambo ry’ibanga" required />
-      <button type="submit">Iyandikishe</button>
-      <p>Usanzwe ufite konti? <a href="login.html">Injira hano</a></p>
-    </form>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <h2>Iyandikishe</h2>
+  <form id="registerForm">
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Ijambo banga" required><br>
+    <button type="submit">Iyandikishe</button>
+  </form>
 
   <script>
-    // Firebase Configuration yawe
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
-    };
-
-    // Tangura Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Kwakira form yo kwiyandikisha
-    document.getElementById("registerForm").addEventListener("submit", function (e) {
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
+      const email = form.email.value;
+      const password = form.password.value;
 
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-
-      // Iyandikishe kuri Firebase Auth
-      auth.createUserWithEmailAndPassword(email, password)
+      firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
-
-          // Bika andi makuru muri Firestore
-          return db.collection("users").doc(user.uid).set({
-            name: name,
-            email: email,
-            uid: user.uid,
-            createdAt: new Date()
-          });
-        })
-        .then(() => {
-          alert("Wanditswe neza kuri Murikimpano!");
+          alert("Wiyandikishije neza!");
           window.location.href = "login.html";
         })
         .catch((error) => {
-          alert("Ikibazo: " + error.message);
-          console.error(error);
+          alert("Ikosa: " + error.message);
         });
     });
   </script>
