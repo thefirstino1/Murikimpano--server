@@ -137,5 +137,16 @@
     }
   });
 </script>
+<h1 id="welcome">Murakaza neza!</h1>
+<button onclick="logout()">Sohoka</button>
+
+<script>
+  function logout() {
+    firebase.auth().signOut().then(() => {
+      alert("Warasohotse!");
+      window.location.href = "login.html";
+    });
+  }
+</script>
 </body>
 </html>
