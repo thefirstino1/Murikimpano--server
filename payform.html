@@ -1,78 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Kwiyishyurira - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kwiyandikisha kw'Ubwishyu | MURIKIMPANO</title>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase Configuration -->
-  <script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+    }
+    .glow-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+      outline: none;
+    }
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.7);
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
     const firebaseConfig = {
-      apiKey: "ANDIKA_API_KEY_HANO",
-      authDomain: "ANDIKA_AUTH_DOMAIN_HANO",
-      projectId: "ANDIKA_PROJECT_ID_HANO",
-      storageBucket: "ANDIKA_STORAGE_BUCKET_HANO",
-      messagingSenderId: "ANDIKA_MESSAGING_ID_HANO",
-      appId: "ANDIKA_APP_ID_HANO",
-      databaseURL: "https://ANDIKA_PROJECT_ID_HANO.firebaseio.com"
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.submitPayment = async function () {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const product = document.getElementById("product").value.trim();
+      const amount = document.getElementById("amount").value.trim();
+      const method = document.getElementById("method").value;
+
+      const msg = document.getElementById("message");
+
+      if (!name || !email || !product || !amount || !method) {
+        msg.innerText = "Nyamuneka wuzuza byose!";
+        msg.className = "text-red-500 font-bold text-center mb-4";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "payments"), {
+          name,
+          email,
+          product,
+          amount,
+          method,
+          timestamp: new Date()
+        });
+        msg.innerText = "Ubwishyu bwawe bwakiriwe neza! Turaguhamagara vuba.";
+        msg.className = "text-green-400 font-bold text-center mb-4";
+
+        document.getElementById("payment-form").reset();
+      } catch (e) {
+        msg.innerText = "Habaye ikosa: " + e.message;
+        msg.className = "text-red-500 font-bold text-center mb-4";
+      }
+    };
   </script>
 </head>
 
-<body>
-  <h2>Fisha yo Kwiyishyurira</h2>
-  <form id="paymentForm">
-    <input type="text" id="name" placeholder="Amazina yawe" required><br><br>
-    <input type="email" id="email" placeholder="Email yawe" required><br><br>
-    <input type="number" id="amount" placeholder="Amafaranga" required><br><br>
+<body class="flex items-center justify-center min-h-screen p-6">
 
-    <label>Hitamo cryptocurrency:</label><br>
-    <select id="crypto" required>
-      <option value="USDT TRC20">USDT TRC20</option>
-      <option value="USDT BEP20">USDT BEP20</option>
-      <option value="TRX">TRX</option>
-      <option value="Bitcoin">Bitcoin</option>
-      <option value="Ethereum">Ethereum</option>
-      <option value="TonCoin">TonCoin</option>
-      <option value="XRP">XRP</option>
-      <option value="BNB">BNB</option>
-    </select><br><br>
+  <div class="bg-black bg-opacity-70 p-8 rounded-xl shadow-xl w-full max-w-lg">
+    <h1 class="text-3xl font-bold text-yellow-400 text-center mb-6">Formulire y'Ubwishyu</h1>
 
-    <button type="submit">Ohereza Amakuru</button>
-  </form>
+    <div id="message"></div>
 
-  <script>
-    const paymentForm = document.getElementById('paymentForm');
+    <form id="payment-form" class="space-y-4">
+      <div>
+        <label for="name" class="block text-sm mb-1">Izina Ryose</label>
+        <input type="text" id="name" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600" placeholder="ex: Ndayishimiye Gilbert" />
+      </div>
 
-    paymentForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+      <div>
+        <label for="email" class="block text-sm mb-1">Email</label>
+        <input type="email" id="email" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600" placeholder="ex: murikimpano@gmail.com" />
+      </div>
 
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const amount = document.getElementById('amount').value;
-      const crypto = document.getElementById('crypto').value;
+      <div>
+        <label for="product" class="block text-sm mb-1">Icyo wishyura</label>
+        <input type="text" id="product" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600" placeholder="ex: Logo Design, Photo Editing" />
+      </div>
 
-      // Bika mu database
-      firebase.database().ref('payments').push({
-        name: name,
-        email: email,
-        amount: amount,
-        crypto: crypto,
-        date: new Date().toISOString()
-      })
-      .then(() => {
-        alert("Amakuru yishyuwe neza! Twohereje info yawe.");
-        paymentForm.reset();
-      })
-      .catch((error) => {
-        alert("Ikosa: " + error.message);
-      });
-    });
-  </script>
+      <div>
+        <label for="amount" class="block text-sm mb-1">Amafaranga ($)</label>
+        <input type="number" id="amount" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600" placeholder="ex: 15" />
+      </div>
+
+      <div>
+        <label for="method" class="block text-sm mb-1">Uburyo bwo kwishyura</label>
+        <select id="method" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600">
+          <option value="">-- Hitamo --</option>
+          <option value="TRX">TRX</option>
+          <option value="Bitcoin">Bitcoin</option>
+          <option value="USDT-TRC20">USDT TRC20</option>
+          <option value="USDT-BEP20">USDT BEP20</option>
+          <option value="Toncoin">Toncoin</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="submitPayment()" class="glow-btn w-full py-3 mt-4">Ohereza</button>
+    </form>
+
+    <p class="text-sm mt-6 text-center text-gray-300">Niba ukeneye ubufasha, <a href="contact.html" class="text-blue-400 hover:underline">twandikire hano</a>.</p>
+  </div>
+
 </body>
 </html>
