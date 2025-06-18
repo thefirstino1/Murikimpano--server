@@ -1,58 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Injira | MURIKIMPANO</title>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase Configuration -->
-  <script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
     const firebaseConfig = {
-      apiKey: "ANDIKA_API_KEY_HANO",
-      authDomain: "ANDIKA_AUTH_DOMAIN_HANO",
-      projectId: "ANDIKA_PROJECT_ID_HANO",
-      storageBucket: "ANDIKA_STORAGE_BUCKET_HANO",
-      messagingSenderId: "ANDIKA_MESSAGING_ID_HANO",
-      appId: "ANDIKA_APP_ID_HANO"
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
     };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+
+    window.loginUser = async function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msgBox = document.getElementById("message");
+
+      if (!email || !password) {
+        msgBox.innerText = "Shyiramo email na password!";
+        msgBox.className = "text-red-500 font-bold mb-4 text-center";
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        msgBox.innerText = "Winjiye neza. Urahita ujya kuri dashboard...";
+        msgBox.className = "text-green-500 font-bold mb-4 text-center";
+
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 2000);
+      } catch (error) {
+        msgBox.innerText = "Ikosa: " + error.message;
+        msgBox.className = "text-red-500 font-bold mb-4 text-center";
+      }
+    };
   </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #000000, #0f2027, #203a43, #2c5364);
+    }
+    .glow-input:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+    }
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
+    }
+  </style>
 </head>
+<body class="flex items-center justify-center h-screen text-white">
 
-<body>
-  <h2>Injira muri Murikimpano</h2>
+  <div class="bg-black bg-opacity-80 p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center mb-6 text-blue-400">Injira kuri MURIKIMPANO</h2>
 
-  <form id="loginForm">
-    <input type="email" id="email" placeholder="Email yawe" required><br><br>
-    <input type="password" id="password" placeholder="Ijambo banga" required><br><br>
-    <button type="submit">Injira</button>
-  </form>
+    <div id="message" class="mb-4 text-center"></div>
 
-  <p>Wibagiwe ijambo banga? <a href="forgot-password.html">Kanda hano</a></p>
+    <div class="mb-4">
+      <label for="email" class="block text-sm font-semibold mb-1">Email</label>
+      <input id="email" type="email" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none" placeholder="Andika email yawe">
+    </div>
 
-  <script>
-    const loginForm = document.getElementById('loginForm');
+    <div class="mb-6">
+      <label for="password" class="block text-sm font-semibold mb-1">Ijambobanga</label>
+      <input id="password" type="password" class="glow-input w-full px-4 py-2 rounded bg-gray-800 border border-gray-600 focus:outline-none" placeholder="Andika password yawe">
+    </div>
 
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+    <button onclick="loginUser()" class="glow-btn w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-full transition-all">Injira</button>
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    <p class="text-center text-sm mt-6">
+      Wibagiwe ijambobanga? <a href="forgot-password.html" class="text-yellow-400 hover:underline">Kanda hano</a>
+    </p>
+    <p class="text-center text-sm mt-2">
+      Nta konti ufite? <a href="register.html" class="text-green-400 hover:underline">Iyandikishe hano</a>
+    </p>
+  </div>
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          alert("Winjiye neza GNB Boss!");
-          window.location.href = "index.html"; // Urahita ujya ku rubuga rw'imbere
-        })
-        .catch((error) => {
-          alert("Ikosa: " + error.message);
-        });
-    });
-  </script>
 </body>
 </html>
