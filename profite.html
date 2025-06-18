@@ -1,84 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile - Murikimpano</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Umwirondoro | MURIKIMPANO</title>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Firebase Configuration -->
-  <script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
     const firebaseConfig = {
-      apiKey: "ANDIKA_API_KEY_HANO",
-      authDomain: "ANDIKA_AUTH_DOMAIN_HANO",
-      projectId: "ANDIKA_PROJECT_ID_HANO",
-      storageBucket: "ANDIKA_STORAGE_BUCKET_HANO",
-      messagingSenderId: "ANDIKA_MESSAGING_ID_HANO",
-      appId: "ANDIKA_APP_ID_HANO"
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
     };
 
-    firebase.initializeApp(firebaseConfig);
-  </script>
-</head>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
 
-<body>
-  <h2>Umwirondoro (Profile)</h2>
+    const userName = document.getElementById("user-name");
+    const userEmail = document.getElementById("user-email");
 
-  <div id="userInfo">
-    <p>Email yawe: <span id="userEmail"></span></p>
-    <p>User ID yawe: <span id="userUID"></span></p>
-  </div>
-
-  <h3>Hindura Email</h3>
-  <input type="email" id="newEmail" placeholder="Email nshya">
-  <button onclick="changeEmail()">Hindura Email</button>
-
-  <h3>Hindura Password</h3>
-  <input type="password" id="newPassword" placeholder="Ijambo banga rishya">
-  <button onclick="changePassword()">Hindura Password</button>
-
-  <br><br>
-  <button onclick="logout()">Sohoka</button>
-
-  <script>
-    firebase.auth().onAuthStateChanged(function(user) {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById('userEmail').textContent = user.email;
-        document.getElementById('userUID').textContent = user.uid;
+        userName.innerText = user.displayName || "Izina ntiryatanzwe";
+        userEmail.innerText = user.email;
       } else {
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // Niba nta user winjiye, yoherezwa kuri login
       }
     });
 
-    function changeEmail() {
-      const newEmail = document.getElementById('newEmail').value;
-      const user = firebase.auth().currentUser;
-
-      user.updateEmail(newEmail).then(() => {
-        alert("Email yahinduwe neza!");
-      }).catch((error) => {
-        alert("Ikosa: " + error.message);
-      });
-    }
-
-    function changePassword() {
-      const newPassword = document.getElementById('newPassword').value;
-      const user = firebase.auth().currentUser;
-
-      user.updatePassword(newPassword).then(() => {
-        alert("Ijambo banga ryahinduwe neza!");
-      }).catch((error) => {
-        alert("Ikosa: " + error.message);
-      });
-    }
-
-    function logout() {
-      firebase.auth().signOut().then(() => {
-        window.location.href = "login.html";
-      });
-    }
+    window.logout = async function () {
+      await signOut(auth);
+      window.location.href = "login.html";
+    };
   </script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    }
+    .glow-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    .glow-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center h-screen text-white">
+
+  <div class="glow-box p-8 rounded-2xl w-full max-w-md text-center">
+    <h2 class="text-4xl font-bold text-yellow-400 mb-4">Umwirondoro Wawe</h2>
+
+    <div class="text-lg mb-6">
+      <p><span class="font-bold text-blue-300">Izina:</span> <span id="user-name">...</span></p>
+      <p><span class="font-bold text-blue-300">Email:</span> <span id="user-email">...</span></p>
+    </div>
+
+    <button onclick="logout()" class="glow-btn w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-full transition-all">Sohoka</button>
+
+    <div class="mt-6 text-sm">
+      <a href="dashboard.html" class="text-green-400 hover:underline">→ Subira kuri Dashboard</a>
+    </div>
+  </div>
+
 </body>
 </html>
