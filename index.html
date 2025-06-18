@@ -1,21 +1,135 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MURIKIMPANO | GNB Boss</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Murikimpano - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    body {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: white;
+    }
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.3);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
 
-  <!-- Firebase SDK (ES Modules) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+    header h1 {
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: 2px;
+      cursor: default;
+    }
 
+    nav button {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 8px 18px;
+      margin-left: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    nav button:hover {
+      background: white;
+      color: #1e3a8a;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.6);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    main h2 {
+      font-size: 36px;
+      font-weight: 900;
+      margin-bottom: 15px;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.6);
+    }
+
+    main p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      max-width: 600px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    footer {
+      background: rgba(0,0,0,0.3);
+      color: #d1d5db;
+      padding: 15px 40px;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 600px) {
+      main h2 {
+        font-size: 28px;
+      }
+      nav button {
+        font-size: 14px;
+        padding: 6px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Murikimpano</h1>
+    <nav>
+      <button onclick="navigateTo('register.html')">Register</button>
+      <button onclick="navigateTo('login.html')">Login</button>
+      <button onclick="navigateTo('forgot-password.html')">Forgot Password</button>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Welcome to Murikimpano</h2>
+    <p>Your one-stop platform for technology, crypto, and social media content creation. Join us and explore endless possibilities!</p>
+    <button style="font-size:18px; padding:14px 30px; border-radius:25px; background:#2563eb; border:none; color:white; font-weight:700; cursor:pointer;" onclick="navigateTo('register.html')">Get Started</button>
+  </main>
+
+  <footer>
+    Contact us: +257 685 19434 | Email: gilbertgnbndayi@gmail.com
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+  <script>
+    // Firebase configuration yawe
     const firebaseConfig = {
       apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
       authDomain: "murikimpano.firebaseapp.com",
@@ -26,42 +140,14 @@
       measurementId: "G-08Q2CKEE87"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Function to navigate to pages
+    function navigateTo(page) {
+      window.location.href = page;
+    }
   </script>
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: url('logomu.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-    .glow-btn {
-      transition: all 0.3s ease-in-out;
-    }
-    .glow-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-    }
-  </style>
-</head>
-<body class="h-screen w-full flex items-center justify-center overlay text-white">
-
-  <div class="text-center p-8 bg-black bg-opacity-70 rounded-2xl shadow-2xl max-w-xl w-full">
-    <h1 class="text-5xl font-bold mb-4"><span class="text-yellow-400">MURIKIMPANO</span></h1>
-    <p class="mb-6 text-lg leading-relaxed">By GNB Boss - Ikoranabuhanga, Ubuhanzi, Crypto, na Social Media bihuriye hano.</p>
-
-    <div class="flex flex-wrap justify-center gap-4 mt-6">
-      <a href="register.html" class="glow-btn px-6 py-3 bg-yellow-400 text-black font-bold rounded-full">Iyandikishe</a>
-      <a href="login.html" class="glow-btn px-6 py-3 bg-blue-500 hover:bg-blue-600 font-bold rounded-full">Injira</a>
-      <a href="client.html" class="glow-btn px-6 py-3 bg-green-500 hover:bg-green-600 font-bold rounded-full">Serivisi zacu</a>
-      <a href="contact.html" class="glow-btn px-6 py-3 bg-pink-500 hover:bg-pink-600 font-bold rounded-full">Twandikire</a>
-      <a href="dashboard.html" class="glow-btn px-6 py-3 bg-gray-800 hover:bg-gray-700 font-bold rounded-full">Dashboard</a>
-    </div>
-  </div>
-
 </body>
 </html>
