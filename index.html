@@ -2,151 +2,62 @@
 <html lang="rw">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Murikimpano | Urupapuro Rw'itangiriro</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MURIKIMPANO | By GNB Boss</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN (Igezweho & Responsive) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+      authDomain: "murikimpano.firebaseapp.com",
+      projectId: "murikimpano",
+      storageBucket: "murikimpano.firebasestorage.app",
+      messagingSenderId: "288360394906",
+      appId: "1:288360394906:web:036db545a633f8eba5af23",
+      measurementId: "G-08Q2CKEE87"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1f2937, #111827);
-      color: #fff;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: #111827;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    header h1 {
-      font-size: 28px;
-      color: #10b981;
-    }
-
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #f3f4f6;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      color: #10b981;
-    }
-
-    .hero {
-      padding: 100px 20px;
-      text-align: center;
-      background-image: url("logomu.jpg");
+      font-family: 'Poppins', sans-serif;
+      background: url('logomu.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-blend-mode: multiply;
-      background-color: rgba(0, 0, 0, 0.7);
     }
-
-    .hero h2 {
-      font-size: 42px;
-      margin-bottom: 20px;
-      color: #fff;
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
     }
-
-    .hero p {
-      font-size: 18px;
-      max-width: 700px;
-      margin: 0 auto 30px;
-    }
-
-    .hero button {
-      padding: 15px 30px;
-      background-color: #10b981;
-      border: none;
-      border-radius: 30px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .hero button:hover {
-      background-color: #059669;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #1f2937;
-      font-size: 14px;
-      color: #ccc;
+    .hero-button:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
-<body>
+<body class="h-screen w-full flex items-center justify-center overlay text-white">
 
-  <header>
-    <h1>Murikimpano</h1>
-    <nav>
-      <a href="index.html">Ahabanza</a>
-      <a href="services.html">Serivisi</a>
-      <a href="crypto.html">Crypto</a>
-      <a href="contact.html">Tuvugishe</a>
-      <a href="login.html">Injira</a>
-      <a href="register.html">Iyandikishe</a>
-    </nav>
-  </header>
+  <div class="text-center p-10 bg-black bg-opacity-60 rounded-xl shadow-lg max-w-xl">
+    <h1 class="text-4xl font-bold mb-4">Murakaza neza kuri <span class="text-yellow-400">MURIKIMPANO</span></h1>
+    <p class="mb-6 text-lg">Urubuga rwawe rw'ikoranabuhanga, ubuhanzi, crypto, na social media.</p>
 
-  <section class="hero">
-    <h2>Tanga Impano yawe | Murikimpano</h2>
-    <p>
-      Murikimpano ni ahantu wige ikoranabuhanga, cryptocurrency, ama robot, ndetse no gufata amafoto n’ama video meza.
-      Reba uko twaguteguriye serivisi zihariye zigezweho.
-    </p>
-    <a href="services.html"><button>Reba Serivisi</button></a>
-  </section>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="register.html" class="hero-button px-6 py-3 bg-yellow-400 text-black rounded-full font-semibold transition transform hover:scale-105">Iyandikishe</a>
+      <a href="login.html" class="hero-button px-6 py-3 bg-transparent border-2 border-yellow-400 rounded-full font-semibold hover:bg-yellow-400 hover:text-black transition">Injira</a>
+      <a href="client.html" class="hero-button px-6 py-3 bg-blue-500 rounded-full font-semibold hover:bg-blue-600 transition">Serivisi zacu</a>
+    </div>
+  </div>
 
-  <footer>
-    &copy; 2025 Murikimpano - By GNB Boss. All Rights Reserved.
-  </footer>
-  
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      document.getElementById("welcome").innerText = "Welcome " + user.email;
-    } else {
-      // Nta muntu winjiye, ushobora kumwohereza kuri login
-      // window.location.href = "login.html";
-    }
-  });
-</script>
-<h1 id="welcome">Murakaza neza!</h1>
-<button onclick="logout()">Sohoka</button>
-
-<script>
-  function logout() {
-    firebase.auth().signOut().then(() => {
-      alert("Warasohotse!");
-      window.location.href = "login.html";
-    });
-  }
-</script>
 </body>
 </html>
