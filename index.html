@@ -111,21 +111,31 @@
   <footer>
     &copy; 2025 Murikimpano - By GNB Boss. All Rights Reserved.
   </footer>
+  
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 
-  <!-- Firebase SDK config: urashobora kuzayikoresha niba ukeneye firebase features kuri homepage -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
-    };
-    const app = initializeApp(firebaseConfig);
-  </script>
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
+  firebase.initializeApp(firebaseConfig);
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      document.getElementById("welcome").innerText = "Welcome " + user.email;
+    } else {
+      // Nta muntu winjiye, ushobora kumwohereza kuri login
+      // window.location.href = "login.html";
+    }
+  });
+</script>
 </body>
 </html>
