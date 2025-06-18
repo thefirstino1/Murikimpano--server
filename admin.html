@@ -1,110 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Dashboard - Murikimpano</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
-      color: #333;
-    }
-    header {
-      background-color: #111;
-      color: white;
-      padding: 1rem 2rem;
+      background-color: #101010;
+      color: #fff;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    .logout-btn {
-      background-color: #e60000;
-      border: none;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
+
+    header {
+      background: #0f52ba;
+      padding: 1.5rem;
       text-align: center;
-      color: #222;
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 4px 12px #0f52ba88;
     }
-    .info {
+
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #64b5f6;
+      margin-bottom: 1.5rem;
+      font-size: 1.6rem;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #0f52ba44;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.01);
+    }
+
+    .card h3 {
+      margin: 0;
       font-size: 1.2rem;
-      margin-top: 20px;
+      color: #0f52ba;
+    }
+
+    .card p {
+      margin: 0.4rem 0;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      background: #121212;
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 2rem;
+      color: #aaa;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.4rem;
+        padding: 1rem;
+      }
+
+      main {
+        padding: 1rem;
+      }
+
+      .card h3 {
+        font-size: 1.05rem;
+      }
+
+      .card p {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h2>MURIKIMPANO ADMIN</h2>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-  </header>
+<header>Murikimpano - Admin Dashboard</header>
 
-  <div class="container">
-    <h1>Welcome Admin</h1>
-    <div class="info" id="user-info">
-      Loading admin info...
-    </div>
+<main>
+  <h2>Ubutumwa bw’abakiriya</h2>
+  <div id="messages">
+    <p class="loading">Turimo tubikura muri Firebase...</p>
   </div>
+</main>
 
-  <!-- Firebase Scripts -->
-  <script type="module">
-    // ✅ Firebase Configuration
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+<footer>© 2025 Murikimpano | GNB Flash Boy</footer>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
-    };
+<!-- Firebase Script -->
+<script>
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+    authDomain: "murikimpano.firebaseapp.com",
+    projectId: "murikimpano",
+    storageBucket: "murikimpano.firebasestorage.app",
+    messagingSenderId: "288360394906",
+    appId: "1:288360394906:web:036db545a633f8eba5af23",
+    measurementId: "G-08Q2CKEE87"
+  };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-    const userInfoDiv = document.getElementById('user-info');
+  const messagesContainer = document.getElementById("messages");
 
-    // ✅ Check if Admin is Logged In
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        userInfoDiv.innerHTML = `
-          <p><strong>Names:</strong> ${user.displayName || 'N/A'}</p>
-          <p><strong>Email:</strong> ${user.email}</p>
-          <p><strong>User ID:</strong> ${user.uid}</p>
-        `;
-      } else {
-        // Niba ntawe winjiye, ohereza ku login page
-        window.location.href = "login.html";
+  // Function to load messages
+  async function loadMessages() {
+    try {
+      const snapshot = await db.collection("clientMessages").orderBy("timestamp", "desc").get();
+      if (snapshot.empty) {
+        messagesContainer.innerHTML = "<p class='loading'>Nta butumwa buraboneka.</p>";
+        return;
       }
-    });
 
-    // ✅ Logout Function
-    function logout() {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      }).catch((error) => {
-        alert("Error during logout: " + error.message);
+      messagesContainer.innerHTML = "";
+      snapshot.forEach(doc => {
+        const msg = doc.data();
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const name = document.createElement("h3");
+        name.textContent = msg.name || "Izina ritazwi";
+
+        const email = document.createElement("p");
+        email.innerHTML = `<strong>Email:</strong> ${msg.email}`;
+
+        const text = document.createElement("p");
+        text.innerHTML = `<strong>Ubutumwa:</strong> ${msg.message}`;
+
+        const time = document.createElement("p");
+        const date = msg.timestamp?.toDate?.() || new Date();
+        time.innerHTML = `<small><strong>Igihe:</strong> ${date.toLocaleString()}</small>`;
+
+        card.appendChild(name);
+        card.appendChild(email);
+        card.appendChild(text);
+        card.appendChild(time);
+
+        messagesContainer.appendChild(card);
       });
+    } catch (error) {
+      messagesContainer.innerHTML = `<p class="loading">Habaye ikosa: ${error.message}</p>`;
     }
-  </script>
+  }
+
+  loadMessages();
+</script>
 
 </body>
 </html>
