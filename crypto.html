@@ -1,158 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rw">
 <head>
-  <meta charset="UTF-8">
-  <title>Crypto Payment | Murikimpano</title>
-  <!-- Hasi ya style, hejuru ya <script> ya copy -->
-<div id="rates" style="max-width:600px; margin-bottom:20px;">
-  <h2>💱 Live Exchange Rates (USD)</h2>
-  <ul>
-    <li>TRX: <span id="rate-tron">--</span> USD</li>
-    <li>BTC: <span id="rate-bitcoin">--</span> USD</li>
-    <li>USDT: <span id="rate-tether">--</span> USD</li>
-    <li>TON: <span id="rate-toncoin">--</span> USD</li>
-  </ul>
-</div>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Crypto Wallets - Murikimpano</title>
 
-<script>
-  async function loadRates() {
-    try {
-      const ids = ['tron','bitcoin','tether','toncoin'];
-      const resp = await fetch(
-        'https://api.coingecko.com/api/v3/simple/price?ids=' + ids.join(',') + '&vs_currencies=usd'
-      );
-      const data = await resp.json();
-      document.getElementById('rate-tron').innerText = data.tron.usd;
-      document.getElementById('rate-bitcoin').innerText = data.bitcoin.usd;
-      document.getElementById('rate-tether').innerText = data.tether.usd;
-      document.getElementById('rate-toncoin').innerText = data.toncoin.usd;
-    } catch (e) {
-      console.error('Error loading rates:', e);
-    }
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+<style>
+  /* Style nziza, igezweho, ifite colors zoroheje */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eee;
+    margin: 0; padding: 0;
+  }
+  header {
+    background: #0f52ba;
+    padding: 1rem 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  main {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #0f52baaa;
+  }
+  h2 {
+    color: #0f52ba;
+    margin-bottom: 1rem;
+  }
+  section.wallets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1.5rem;
+  }
+  .wallet-card {
+    background: #222;
+    border-radius: 12px;
+    padding: 1rem;
+    flex: 1 1 250px;
+    box-shadow: 0 0 10px #0f52ba66;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  .wallet-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #0f52bacc;
+  }
+  .wallet-address {
+    font-family: monospace;
+    background: #0f52ba22;
+    padding: 0.5rem;
+    border-radius: 6px;
+    word-break: break-word;
+    margin: 0.5rem 0;
+    user-select: all;
+  }
+  .qr-code {
+    margin-top: 1rem;
+    max-width: 160px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px #0f52baaa;
+  }
+  button.copy-btn {
+    background: #0f52ba;
+    border: none;
+    padding: 0.4rem 1rem;
+    margin-top: 0.5rem;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  button.copy-btn:hover {
+    background: #094a99;
   }
 
-  loadRates();
-  setInterval(loadRates, 60 * 1000); // Bivugururwa buri munota
-</script>
-  
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f5f5f5;
-    }
+  /* Currency converter section */
+  section.converter {
+    margin-top: 3rem;
+    background: #0f52ba11;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  .converter label {
+    font-weight: 600;
+  }
+  .converter input, .converter select {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+  }
+  .converter button {
+    background: #0f52ba;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    color: white;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .converter button:hover {
+    background: #094a99;
+  }
+  .result {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #0f52ba;
+  }
+  footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+  }
 
-    h1 {
-      color: #222;
-    }
-
-    .wallet-box {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin-bottom: 25px;
-      display: flex;
+  @media(max-width: 600px) {
+    section.wallets {
+      flex-direction: column;
       align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
     }
-
-    .qr {
-      width: 120px;
-    }
-
-    .wallet-details {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .wallet-address {
-      font-weight: bold;
-      font-size: 16px;
-      word-wrap: break-word;
-      margin: 10px 0;
-    }
-
-    button.copy-btn {
-      background-color: #333;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button.copy-btn:hover {
-      background-color: #444;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
-  <h1>Crypto Payment – Murikimpano</h1>
-  <p>Hitamo coin, scan QR code cyangwa ukande kuri "Copy Address".</p>
+<header>Murikimpano Crypto Wallets & Converter</header>
 
-  <!-- TRX -->
-  <div class="wallet-box">
-    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z&size=150x150" alt="TRX QR">
-    <div class="wallet-details">
-      <h3>TRX Wallet</h3>
-      <div class="wallet-address" id="trx">TV4A4eGfMcyFJgF2RTWkSiPGfgfRgQfj8Z</div>
-      <button class="copy-btn" onclick="copyToClipboard('trx')">Copy TRX Address</button>
-    </div>
-  </div>
+<main>
+  <section class="wallets">
+    <h2>Adresse za Crypto Wallets na QR Codes</h2>
 
-  <!-- BTC -->
-  <div class="wallet-box">
-    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf&size=150x150" alt="BTC QR">
-    <div class="wallet-details">
-      <h3>Bitcoin Wallet</h3>
-      <div class="wallet-address" id="btc">bc1qksn9e09ry3x3k8qmhzss78lw3z70uh6qtss8wf</div>
-      <button class="copy-btn" onclick="copyToClipboard('btc')">Copy BTC Address</button>
-    </div>
-  </div>
+    <article class="wallet-card">
+      <h3>TRX (Tron)</h3>
+      <div class="wallet-address" id="trxAddress">TXm7uG39TsAvZ2KpY1fpbi8Ez8FX4zZhJW</div>
+      <button class="copy-btn" data-target="trxAddress">Copy Address</button>
+      <img src="https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=TXm7uG39TsAvZ2KpY1fpbi8Ez8FX4zZhJW&choe=UTF-8" alt="TRX QR Code" class="qr-code" />
+    </article>
 
-  <!-- USDT TRC20 -->
-  <div class="wallet-box">
-    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL&size=150x150" alt="USDT TRC20 QR">
-    <div class="wallet-details">
-      <h3>USDT (TRC20)</h3>
-      <div class="wallet-address" id="usdt-trc20">TXLdJb5j7bW8A3A1zSYRvRHcUq4ZkzQoAL</div>
-      <button class="copy-btn" onclick="copyToClipboard('usdt-trc20')">Copy USDT TRC20</button>
-    </div>
-  </div>
+    <article class="wallet-card">
+      <h3>Toncoin (TON)</h3>
+      <div class="wallet-address" id="tonAddress">0x1234567890abcdef1234567890abcdef12345678</div>
+      <button class="copy-btn" data-target="tonAddress">Copy Address</button>
+      <img src="https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=0x1234567890abcdef1234567890abcdef12345678&choe=UTF-8" alt="TON QR Code" class="qr-code" />
+    </article>
 
-  <!-- USDT BEP20 -->
-  <div class="wallet-box">
-    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4&size=150x150" alt="USDT BEP20 QR">
-    <div class="wallet-details">
-      <h3>USDT (BEP20)</h3>
-      <div class="wallet-address" id="usdt-bep20">0xEd33aE88bA27C5A52A507Ab6eCcf0Efa793afCE4</div>
-      <button class="copy-btn" onclick="copyToClipboard('usdt-bep20')">Copy USDT BEP20</button>
-    </div>
-  </div>
+    <article class="wallet-card">
+      <h3>Bitcoin (BTC)</h3>
+      <div class="wallet-address" id="btcAddress">1BoatSLRHtKNngkdXEeobR76b53LETtpyT</div>
+      <button class="copy-btn" data-target="btcAddress">Copy Address</button>
+      <img src="https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=1BoatSLRHtKNngkdXEeobR76b53LETtpyT&choe=UTF-8" alt="BTC QR Code" class="qr-code" />
+    </article>
 
-  <!-- TON -->
-  <div class="wallet-box">
-    <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?data=UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ&size=150x150" alt="TON QR">
-    <div class="wallet-details">
-      <h3>Toncoin Wallet</h3>
-      <div class="wallet-address" id="ton">UQCLO3pOD8P7zshJ4xEGH2cwxYg9O7smnfs3uZmN9pBlz9cJ</div>
-      <button class="copy-btn" onclick="copyToClipboard('ton')">Copy TON Address</button>
-    </div>
-  </div>
+    <article class="wallet-card">
+      <h3>USDT (Tether) TRC20</h3>
+      <div class="wallet-address" id="usdtAddress">TQf3F5EGVh24Xjhu3WgSxqPrPQvZaz7gWq</div>
+      <button class="copy-btn" data-target="usdtAddress">Copy Address</button>
+      <img src="https://chart.googleapis.com/chart?chs=160x160&cht=qr&chl=TQf3F5EGVh24Xjhu3WgSxqPrPQvZaz7gWq&choe=UTF-8" alt="USDT QR Code" class="qr-code" />
+    </article>
 
-  <script>
-    function copyToClipboard(id) {
-      const address = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(address).then(() => {
-        alert("Address copied: " + address);
-      }).catch(err => {
-        alert("Failed to copy: " + err);
+  </section>
+
+  <section class="converter">
+    <h2>Currency Converter (USDT ↔ Cryptocurrency & RWF/BIF)</h2>
+    <label for="amount">Umubare wa USDT</label>
+    <input type="number" id="amount" placeholder="Andika umubare wa USDT" min="0" step="any" />
+
+    <label for="convertTo">Hindura USDT muri:</label>
+    <select id="convertTo">
+      <option value="TRX">TRX (Tron)</option>
+      <option value="TON">Toncoin (TON)</option>
+      <option value="BTC">Bitcoin (BTC)</option>
+      <option value="RWF">Amafaranga y'u Rwanda (RWF)</option>
+      <option value="BIF">Amafaranga y'u Burundi (BIF)</option>
+    </select>
+
+    <button id="convertBtn">Hindura</button>
+    <div class="result" id="result"></div>
+  </section>
+</main>
+
+<footer>
+  © 2025 Murikimpano | By GNB Flash Boy
+</footer>
+
+<script>
+  // Firebase configuration and initialization
+  const firebaseConfig = {
+    apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
+    authDomain: "murikimpano.firebaseapp.com",
+    projectId: "murikimpano",
+    storageBucket: "murikimpano.firebasestorage.app",
+    messagingSenderId: "288360394906",
+    appId: "1:288360394906:web:036db545a633f8eba5af23",
+    measurementId: "G-08Q2CKEE87"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  // Copy address buttons
+  document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const addressText = document.getElementById(targetId).textContent;
+      navigator.clipboard.writeText(addressText).then(() => {
+        alert("Adresse copied to clipboard!");
+      }).catch(() => {
+        alert("Failed to copy address.");
       });
+    });
+  });
+
+  // Exchange rates (mock values - replace with live API if needed)
+  // These could be dynamically fetched from APIs such as CoinGecko or CryptoCompare.
+  // For now, sample static rates relative to 1 USDT:
+  const exchangeRates = {
+    TRX: 17.5,        // 1 USDT = 17.5 TRX
+    TON: 0.3,         // 1 USDT = 0.3 TON
+    BTC: 0.000030,    // 1 USDT = 0.000030 BTC
+    RWF: 1200,        // 1 USDT = 1200 RWF (Rwandan Franc)
+    BIF: 2400         // 1 USDT = 2400 BIF (Burundi Franc)
+  };
+
+  const convertBtn = document.getElementById("convertBtn");
+  const resultDiv = document.getElementById("result");
+
+  convertBtn.addEventListener("click", () => {
+    const amount = parseFloat(document.getElementById("amount").value);
+    const toCurrency = document.getElementById("convertTo").value;
+
+    if (isNaN(amount) || amount <= 0) {
+      alert("Andika umubare mwiza wa USDT.");
+      return;
     }
-  </script>
+
+    const rate = exchangeRates[toCurrency];
+    if (!rate) {
+      resultDiv.textContent = "Ntibashoboye kubona igiciro cya currency.";
+      return;
+    }
+
+    const convertedAmount = amount * rate;
+
+    let symbol = toCurrency;
+    if(toCurrency === "RWF") symbol = "FRw";
+    if(toCurrency === "BIF") symbol = "FBu";
+
+    resultDiv.textContent = `${amount} USDT = ${convertedAmount.toLocaleString()} ${symbol}`;
+  });
+
+</script>
 
 </body>
 </html>
