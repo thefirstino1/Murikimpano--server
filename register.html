@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Register | Murikimpano</title>
 
-  <!-- Style yawe -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Link ya style -->
+  <link rel="stylesheet" href="style.css" />
 
-  <!-- Multi-Language Script (Simple Switcher) -->
+  <!-- Multi-language switcher -->
   <script>
     function changeLanguage(lang) {
       const elements = document.querySelectorAll("[data-lang]");
@@ -24,6 +24,7 @@
         email: "Email",
         password: "Password",
         register: "Register",
+        loginRedirect: "Already have an account? Login",
         langSelect: "Select Language"
       },
       fr: {
@@ -31,6 +32,7 @@
         email: "E-mail",
         password: "Mot de passe",
         register: "S'inscrire",
+        loginRedirect: "Vous avez déjà un compte ? Connexion",
         langSelect: "Choisir la Langue"
       },
       rw: {
@@ -38,6 +40,7 @@
         email: "Imeyili",
         password: "Ijambo ry’ibanga",
         register: "Iyandikishe",
+        loginRedirect: "Ufite konti? Injira hano",
         langSelect: "Hitamo Ururimi"
       },
       sw: {
@@ -45,6 +48,7 @@
         email: "Barua pepe",
         password: "Nenosiri",
         register: "Jisajili",
+        loginRedirect: "Tayari una akaunti? Ingia",
         langSelect: "Chagua Lugha"
       }
     };
@@ -64,36 +68,49 @@
       <option value="sw">Kiswahili</option>
     </select>
 
-    <!-- Register Form -->
-    <form id="registerForm">
+    <!-- Form yo kwiyandikisha -->
+    <form id="registerForm" style="margin-top: 20px;">
       <label for="email" data-lang="email">Email</label>
-      <input type="email" id="email" required>
+      <input type="email" id="email" placeholder="Enter your email" required />
 
       <label for="password" data-lang="password">Password</label>
-      <input type="password" id="password" required>
+      <input type="password" id="password" placeholder="Enter your password" required />
 
-      <button type="submit" class="btn" data-lang="register">Register</button>
+      <button type="submit" class="btn" id="registerBtn" data-lang="register">Register</button>
     </form>
+
+    <!-- Link ijya kuri login -->
+    <p style="margin-top: 10px;" data-lang="loginRedirect">
+      Already have an account? <a href="login.html">Login</a>
+    </p>
   </div>
 
-  <!-- Firebase Code -->
+  <!-- Firebase Authentication -->
   <script type="module">
     import { auth } from './firebase-config.js';
     import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     const form = document.getElementById("registerForm");
+    const registerBtn = document.getElementById("registerBtn");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+
+      registerBtn.disabled = true;
+      registerBtn.textContent = "Registering...";
 
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         alert("Account created successfully for: " + userCredential.user.email);
-        form.reset();
+        window.location.href = "login.html"; // Redirect to login
       } catch (error) {
         alert("Error: " + error.message);
+      } finally {
+        registerBtn.disabled = false;
+        registerBtn.textContent = "Register";
       }
     });
   </script>
