@@ -1,115 +1,158 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Serivisi Dutanga | MURIKIMPANO</title>
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
+  <title>Our Services | Murikimpano</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="firebase-config.js"></script>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-      color: #ffffff;
-    }
-    .card {
-      background-color: rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      margin: 0;
       padding: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #004085;
     }
-    .glow-btn {
-      background-color: #facc15;
-      color: #000;
-      font-weight: bold;
-      padding: 10px 20px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
+    .container {
+      max-width: 900px;
+      margin: auto;
     }
-    .glow-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(250, 204, 21, 0.7);
+    .intro {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.2rem;
+      color: #555;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .service-emoji {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .service-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: #004085;
+      text-align: center;
+    }
+    .service-desc {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .service-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 0;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .service-btn:hover {
+      background-color: #0056b3;
     }
   </style>
-
-  <!-- Firebase Configuration -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-  </script>
 </head>
+<body>
+  <div class="container">
+    <h1>Our Services at Murikimpano 💼✨</h1>
+    <p class="intro">
+      We offer a variety of creative and tech services tailored to help you shine online and offline.
+    </p>
 
-<body class="p-6">
-  <h1 class="text-4xl font-bold text-center text-yellow-400 mb-10">Serivisi Dutanga muri <span class="text-blue-400">MURIKIMPANO</span></h1>
+    <div class="services-grid">
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="service-card">
+        <div class="service-emoji">🎨</div>
+        <div class="service-title">Logo Design</div>
+        <div class="service-desc">Custom logos that give your brand a unique identity and style.</div>
+        <button class="service-btn" onclick="alert('Contact us to order your custom logo!')">Order Now</button>
+      </div>
 
-    <!-- Service 1: Logo Design -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">🎨 Gukora Logo</h2>
-      <p class="mb-4 text-sm">Dukora ama logo y'umwimerere, agezweho, akurura abantu kandi yihariye. Niba ushaka logo y'ikigo, YouTube, business cyangwa personal brand, turagufasha!</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
+      <div class="service-card">
+        <div class="service-emoji">🖼️</div>
+        <div class="service-title">Photo Printing</div>
+        <div class="service-desc">High-quality photo prints on paper, canvas, and more.</div>
+        <button class="service-btn" onclick="alert('Get your photos printed with us!')">Print Now</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-emoji">🎥</div>
+        <div class="service-title">Video Editing</div>
+        <div class="service-desc">Professional video editing for your projects and social media.</div>
+        <button class="service-btn" onclick="alert('Let us edit your videos!')">Edit Now</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-emoji">📱</div>
+        <div class="service-title">Social Media Management</div>
+        <div class="service-desc">Grow and manage your online presence with expert strategies.</div>
+        <button class="service-btn" onclick="alert('Boost your social media!')">Boost Now</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-emoji">💻</div>
+        <div class="service-title">Tech Consulting</div>
+        <div class="service-desc">Get advice and solutions for your tech challenges.</div>
+        <button class="service-btn" onclick="alert('Consult with our experts!')">Consult Now</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-emoji">💰</div>
+        <div class="service-title">Crypto Guidance</div>
+        <div class="service-desc">Learn about cryptocurrency and how to invest safely.</div>
+        <button class="service-btn" onclick="alert('Start your crypto journey!')">Learn More</button>
+      </div>
+
     </div>
 
-    <!-- Service 2: Photo Editing & Printing -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">📸 Gutunganya & Gusohora Amafoto</h2>
-      <p class="mb-4 text-sm">Dutunganya amafoto mu buryo bugezweho tukayakusanyiriza kuri flash, CD cyangwa tukayacapura ku mpapuro z’ubwiza buhebuje.</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
-    </div>
-
-    <!-- Service 3: Tech & Social Media Lessons -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">🧠 Kwigisha Ikoranabuhanga</h2>
-      <p class="mb-4 text-sm">Twigisha uburyo bwo gukora website, gukora YouTube channel, social media marketing, content creation n'ibindi byinshi bifasha abakiri bato gutera imbere mu ikoranabuhanga.</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
-    </div>
-
-    <!-- Service 4: Cryptocurrency Consulting -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">💰 Cryptocurrency Services</h2>
-      <p class="mb-4 text-sm">Turafasha gusobanukirwa na crypto, wallet management, trading, investing, ndetse n’uko wakwinjiza amafaranga mu buryo bwizewe ukoresheje blockchain.</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
-    </div>
-
-    <!-- Service 5: Studio Services -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">🎤 Studio (Audio & Video)</h2>
-      <p class="mb-4 text-sm">Tufite studio ifasha abahanzi gukora amajwi (recording, mixing, mastering) n’amashusho meza cyane. Turakira buri wese wifuza ubuziranenge buhambaye.</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
-    </div>
-
-    <!-- Service 6: Printing Services -->
-    <div class="card">
-      <h2 class="text-xl font-bold mb-2 text-yellow-300">🖨️ Gusohora & Gucapa</h2>
-      <p class="mb-4 text-sm">Ducapa impapuro, amakarita, amanota, CV, fiche de paie n’ibindi byose. Turatanga service yihuta kandi itanga umusaruro mwiza.</p>
-      <a href="contact.html" class="glow-btn">Tumenye</a>
-    </div>
-
+    <!-- Language switcher -->
+    <label for="languageSelect" style="margin-top:2rem; display:block;">Choose Language:</label>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+      <option value="rw">Ikinyarwanda</option>
+      <option value="sw">Kiswahili</option>
+    </select>
   </div>
 
-  <footer class="text-center text-sm mt-10 text-gray-400">
-    © 2025 MURIKIMPANO by GNB Boss – Uburenganzira bwose burabitswe.
-  </footer>
+  <script>
+    // Language switcher
+    document.getElementById('languageSelect').addEventListener('change', function() {
+      const lang = this.value;
+      localStorage.setItem('lang', lang);
+      alert("Language changed to " + lang);
+      location.reload();
+    });
+  </script>
 </body>
 </html>
