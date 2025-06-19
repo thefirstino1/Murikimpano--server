@@ -1,83 +1,130 @@
 <!DOCTYPE html>
-<html lang="rw">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Umwirondoro | MURIKIMPANO</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
-      authDomain: "murikimpano.firebaseapp.com",
-      projectId: "murikimpano",
-      storageBucket: "murikimpano.firebasestorage.app",
-      messagingSenderId: "288360394906",
-      appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-
-    const userName = document.getElementById("user-name");
-    const userEmail = document.getElementById("user-email");
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        userName.innerText = user.displayName || "Izina ntiryatanzwe";
-        userEmail.innerText = user.email;
-      } else {
-        window.location.href = "login.html"; // Niba nta user winjiye, yoherezwa kuri login
-      }
-    });
-
-    window.logout = async function () {
-      await signOut(auth);
-      window.location.href = "login.html";
-    };
-  </script>
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    }
-    .glow-box {
-      background-color: rgba(0, 0, 0, 0.7);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    }
-    .glow-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-    }
-  </style>
+  <title>User Profile | Murikimpano</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="flex items-center justify-center h-screen text-white">
+<body class="container fade-in">
 
-  <div class="glow-box p-8 rounded-2xl w-full max-w-md text-center">
-    <h2 class="text-4xl font-bold text-yellow-400 mb-4">Umwirondoro Wawe</h2>
+  <!-- Logo -->
+  <div class="logo-container" style="text-align: center;">
+    <img src="logomu.jpg" alt="Murikimpano Logo" style="width: 100px; margin-top: 20px;" />
+  </div>
 
-    <div class="text-lg mb-6">
-      <p><span class="font-bold text-blue-300">Izina:</span> <span id="user-name">...</span></p>
-      <p><span class="font-bold text-blue-300">Email:</span> <span id="user-email">...</span></p>
-    </div>
+  <!-- Profile Card -->
+  <div class="card">
+    <h2>My Profile</h2>
 
-    <button onclick="logout()" class="glow-btn w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-full transition-all">Sohoka</button>
+    <!-- Profile photo -->
+    <img id="profilePhoto" src="default.jpg" alt="Profile Photo" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
+    
+    <!-- Upload new photo -->
+    <input type="file" id="photoInput" accept="image/*" />
+    <button class="btn" onclick="uploadPhoto()">Upload Photo</button>
 
-    <div class="mt-6 text-sm">
-      <a href="dashboard.html" class="text-green-400 hover:underline">→ Subira kuri Dashboard</a>
+    <!-- User info -->
+    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    <p><strong>User ID:</strong> <span id="userUID"></span></p>
+    <p><strong>Created:</strong> <span id="createdAt"></span></p>
+
+    <!-- Name/Bio update -->
+    <input type="text" id="userName" placeholder="Your Name">
+    <button class="btn" onclick="saveProfile()">Save Profile</button>
+    <p><strong>Saved Name:</strong> <span id="savedName">--</span></p>
+
+    <!-- Actions -->
+    <div class="btn-group">
+      <button class="btn" onclick="changePassword()">Change Password</button>
+      <button class="btn btn-danger" id="logoutBtn">Logout</button>
     </div>
   </div>
 
+  <!-- Firebase + Logic -->
+  <script type="module">
+    import { auth, storage, realtimeDB } from './firebase-config.js';
+    import {
+      onAuthStateChanged,
+      sendPasswordResetEmail,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      ref as dbRef,
+      set,
+      get,
+      child
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import {
+      ref as storageRef,
+      uploadBytes,
+      getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    const userEmail = document.getElementById("userEmail");
+    const userUID = document.getElementById("userUID");
+    const createdAt = document.getElementById("createdAt");
+    const profilePhoto = document.getElementById("profilePhoto");
+    const photoInput = document.getElementById("photoInput");
+    const userName = document.getElementById("userName");
+    const savedName = document.getElementById("savedName");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    let currentUser = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        userEmail.textContent = user.email;
+        userUID.textContent = user.uid;
+        createdAt.textContent = new Date(user.metadata.creationTime).toLocaleString();
+
+        // Load profile info
+        const snapshot = await get(child(dbRef(realtimeDB), "users/" + user.uid));
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          savedName.textContent = data.name || "--";
+          if (data.photoURL) {
+            profilePhoto.src = data.photoURL;
+          }
+        }
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    window.uploadPhoto = async () => {
+      const file = photoInput.files[0];
+      if (!file || !currentUser) return alert("Select a file!");
+
+      const imgRef = storageRef(storage, 'profiles/' + currentUser.uid + '.jpg');
+      await uploadBytes(imgRef, file);
+      const url = await getDownloadURL(imgRef);
+
+      // Save URL to DB
+      await set(dbRef(realtimeDB, 'users/' + currentUser.uid + '/photoURL'), url);
+      profilePhoto.src = url;
+      alert("Profile photo updated!");
+    };
+
+    window.saveProfile = async () => {
+      const name = userName.value;
+      if (!name || !currentUser) return;
+      await set(dbRef(realtimeDB, 'users/' + currentUser.uid + '/name'), name);
+      savedName.textContent = name;
+      alert("Profile info saved.");
+    };
+
+    window.changePassword = () => {
+      sendPasswordResetEmail(auth, currentUser.email)
+        .then(() => alert("Reset link sent to " + currentUser.email))
+        .catch((err) => alert("Error: " + err.message));
+    };
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+  </script>
 </body>
 </html>
