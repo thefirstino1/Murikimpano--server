@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Your Files | Murikimpano</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="firebase-config.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9fafb;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #004085;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+    input[type="file"] {
+      display: block;
+      margin-bottom: 15px;
+    }
+    #preview {
+      display: block;
+      max-width: 100%;
+      max-height: 300px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      object-fit: contain;
+      border: 1px solid #ddd;
+    }
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      margin-top: 15px;
+      font-weight: 600;
+      color: #28a745;
+      text-align: center;
+    }
+    /* Language selector */
+    #languageSelect {
+      margin-top: 25px;
+      display: block;
+      width: 150px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload Your Files 📤</h2>
+    <form id="uploadForm">
+      <label for="fileInput">Choose image or video file:</label>
+      <input type="file" id="fileInput" accept="image/*,video/*" required />
+      
+      <img id="preview" src="#" alt="File preview" style="display:none;" />
+      
+      <button type="submit">Upload</button>
+    </form>
+    <div id="status"></div>
+
+    <!-- Language switcher -->
+    <label for="languageSelect">Choose Language:</label>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+      <option value="rw">Ikinyarwanda</option>
+      <option value="sw">Kiswahili</option>
+    </select>
+  </div>
+
+  <script type="module">
+    import { storage } from './firebase-config.js';
+    import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js";
+
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const status = document.getElementById('status');
+    const form = document.getElementById('uploadForm');
+
+    // Show preview when file selected
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        preview.style.display = 'none';
+        return;
+      }
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none'; // No preview for videos for now
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Please select a file first!');
+        return;
+      }
+
+      const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      status.style.color = '#007bff';
+      status.textContent = 'Uploading... Please wait';
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // Optional: progress monitoring
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          status.textContent = `Uploading... ${progress.toFixed(0)}%`;
+        },
+        (error) => {
+          status.style.color = 'red';
+          status.textContent = 'Upload failed: ' + error.message;
+        },
+        () => {
+          // Success
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            status.style.color = 'green';
+            status.innerHTML = `Upload successful! <br> File URL: <a href="${downloadURL}" target="_blank">View File</a>`;
+            form.reset();
+            preview.style.display = 'none';
+          });
+        }
+      );
+    });
+
+    // Language switcher
+    document.getElementById('languageSelect').addEventListener('change', function() {
+      const lang = this.value;
+      localStorage.setItem('lang', lang);
+      alert("Language changed to " + lang);
+      location.reload();
+    });
+  </script>
+</body>
+</html>
