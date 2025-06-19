@@ -1,135 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="rw">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Murikimpano - Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-  <style>
-    /* Base reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Murikimpano - Ahagaragazwa Impano Zawe</title>
 
-    body {
-      background: linear-gradient(135deg, #1e3a8a, #2563eb);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: white;
-    }
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-    header {
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-    }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    header h1 {
-      font-weight: 800;
-      font-size: 24px;
-      letter-spacing: 2px;
-      cursor: default;
-    }
-
-    nav button {
-      background: transparent;
-      border: 2px solid white;
-      color: white;
-      padding: 8px 18px;
-      margin-left: 12px;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 16px;
-    }
-
-    nav button:hover {
-      background: white;
-      color: #1e3a8a;
-      box-shadow: 0 4px 15px rgba(255,255,255,0.6);
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    main h2 {
-      font-size: 36px;
-      font-weight: 900;
-      margin-bottom: 15px;
-      text-shadow: 0 3px 8px rgba(0,0,0,0.6);
-    }
-
-    main p {
-      font-size: 18px;
-      margin-bottom: 30px;
-      max-width: 600px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    }
-
-    footer {
-      background: rgba(0,0,0,0.3);
-      color: #d1d5db;
-      padding: 15px 40px;
-      text-align: center;
-      font-size: 14px;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
-    }
-
-    @media (max-width: 600px) {
-      main h2 {
-        font-size: 28px;
-      }
-      nav button {
-        font-size: 14px;
-        padding: 6px 14px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>Murikimpano</h1>
-    <nav>
-      <button onclick="navigateTo('register.html')">Register</button>
-      <button onclick="navigateTo('login.html')">Login</button>
-      <button onclick="navigateTo('forgot-password')">Forgot Password</button>
-    </nav>
-  </header>
-
-  <main>
-    <h2>Welcome to Murikimpano</h2>
-    <p>Your one-stop platform for technology, crypto, and social media content creation. Join us and explore endless possibilities!</p>
-    <button style="font-size:18px; padding:14px 30px; border-radius:25px; background:#2563eb; border:none; color:white; font-weight:700; cursor:pointer;" onclick="navigateTo('register.html')">Get Started</button>
-  </main>
-
-  <footer>
-    Contact us: +257 685 19434 | Email: gilbertgnbndayi@gmail.com
-  </footer>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-
+  <!-- ✅ Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
   <script>
-    // Firebase configuration yawe
     const firebaseConfig = {
       apiKey: "AIzaSyBC-bxI0yfqnlp2TyDAYZH0vEYcQH_tDf0",
       authDomain: "murikimpano.firebaseapp.com",
@@ -137,17 +23,80 @@
       storageBucket: "murikimpano.firebasestorage.app",
       messagingSenderId: "288360394906",
       appId: "1:288360394906:web:036db545a633f8eba5af23",
-      measurementId: "G-08Q2CKEE87"
+      measurementId: "G-08Q2CKEE87",
+      databaseURL: "https://murikimpano.firebaseio.com"
     };
-
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Function to navigate to pages
-    function navigateTo(page) {
-      window.location.href = page;
-    }
   </script>
+
+  <!-- Style -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .hero {
+      background-color: #f8f9fa;
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .btn-custom {
+      margin: 5px;
+    }
+
+    footer {
+      background-color: #343a40;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Murikimpano</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Ahabanza</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.html">Serivisi</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Info</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Injira</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Iyandikishe</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Murakaza neza kuri Murikimpano</h1>
+    <p>Aho impano zigaragazwa, ikoranabuhanga rigatuma uzamuka!</p>
+    <a href="login.html" class="btn btn-primary btn-custom">Injira</a>
+    <a href="register.html" class="btn btn-success btn-custom">Iyandikishe</a>
+    <a href="contact.html" class="btn btn-outline-dark btn-custom">Contact Info</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Murikimpano. Uburenganzira bwose burabitswe.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
