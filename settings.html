@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings | Murikimpano</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="firebase-config.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Account Settings</h2>
+
+    <!-- Change Name -->
+    <div class="setting-section">
+      <label for="displayName">Display Name:</label>
+      <input type="text" id="displayName" placeholder="Enter new name">
+      <button onclick="updateName()">Save Name</button>
+    </div>
+
+    <!-- Change Email -->
+    <div class="setting-section">
+      <label for="email">New Email:</label>
+      <input type="email" id="email" placeholder="Enter new email">
+      <button onclick="updateEmail()">Save Email</button>
+    </div>
+
+    <!-- Change Password -->
+    <div class="setting-section">
+      <label for="password">New Password:</label>
+      <input type="password" id="password" placeholder="Enter new password">
+      <button onclick="updatePassword()">Change Password</button>
+    </div>
+
+    <!-- Language Selection -->
+    <div class="setting-section">
+      <label for="languageSelect">Language:</label>
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="rw">Ikinyarwanda</option>
+        <option value="sw">Kiswahili</option>
+      </select>
+    </div>
+
+    <!-- Theme Switch -->
+    <div class="setting-section">
+      <label for="themeToggle">Dark Mode:</label>
+      <input type="checkbox" id="themeToggle">
+    </div>
+
+    <!-- Logout + Delete -->
+    <div class="setting-section">
+      <button onclick="logout()">Logout</button>
+      <button onclick="deleteAccount()" class="danger">Delete Account</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth } from './firebase-config.js';
+    import { updateProfile, updateEmail, updatePassword, deleteUser } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    // Update display name
+    function updateName() {
+      const user = auth.currentUser;
+      const newName = document.getElementById('displayName').value;
+      if (user && newName) {
+        updateProfile(user, { displayName: newName }).then(() => {
+          alert("Name updated!");
+        });
+      }
+    }
+
+    // Update email
+    function updateEmail() {
+      const user = auth.currentUser;
+      const newEmail = document.getElementById('email').value;
+      if (user && newEmail) {
+        updateEmail(user, newEmail).then(() => {
+          alert("Email updated!");
+        }).catch((e) => alert("Error: " + e.message));
+      }
+    }
+
+    // Update password
+    function updatePassword() {
+      const user = auth.currentUser;
+      const newPassword = document.getElementById('password').value;
+      if (user && newPassword) {
+        updatePassword(user, newPassword).then(() => {
+          alert("Password changed!");
+        }).catch((e) => alert("Error: " + e.message));
+      }
+    }
+
+    // Logout
+    function logout() {
+      auth.signOut().then(() => {
+        alert("Logged out!");
+        window.location.href = "login.html";
+      });
+    }
+
+    // Delete account
+    function deleteAccount() {
+      const user = auth.currentUser;
+      if (user && confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+        deleteUser(user).then(() => {
+          alert("Account deleted.");
+          window.location.href = "register.html";
+        }).catch((error) => alert("Error: " + error.message));
+      }
+    }
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Language switcher
+    document.getElementById('languageSelect').addEventListener('change', function() {
+      const lang = this.value;
+      localStorage.setItem('lang', lang);
+      alert("Language changed to " + lang);
+      location.reload();
+    });
+  </script>
+</body>
+</html>
